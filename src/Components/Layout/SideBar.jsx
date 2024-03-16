@@ -7,6 +7,8 @@ import { IoNewspaperOutline } from "react-icons/io5";
 import { TbFileInvoice, TbLogout2 } from "react-icons/tb";
 import { BsInfoCircle } from "react-icons/bs";
 import { LuCalendarDays, LuLayoutDashboard } from "react-icons/lu";
+import { Button } from "@nextui-org/react";
+import { FaPlus } from "react-icons/fa6";
 
 const SideBar = ({ sidebarOpen }) => {
     return (
@@ -19,10 +21,17 @@ const SideBar = ({ sidebarOpen }) => {
                 </h1>
             </header>
             <div className={`  ${sidebarOpen ? "" : "hidden"}`}>
-                <div className="w-full bg-gray-300 h-[1.5px] " ></div>          <ul className="my-2 font-medium">
+                <div className="w-full bg-gray-300 h-[1.5px] " ></div>
+                <ul className="my-2 font-medium">
+                    <li>
+                        <Button className="flex items-center bg-[#74C1FC] p-5 mx-3 my-3  text-white  transition duration-75 rounded-3xl hover:bg-[#74C1FC] shadow-md group">
+                            <FaPlus className="flex-shrink-0 w-6 h-6 text-white transition duration-75  " />
+                            <span className="flex-1 whitespace-nowrap text-lg font-semibold">New Booking</span>
+                        </Button>
+                    </li>
                     <li>
                         <Link to={"/"} className="flex items-center p-2 mx-3 mb-1 text-white rounded-lg transition duration-75 hover:bg-[#66b0de] focus:bg-[#66b0de] group">
-                            <LuLayoutDashboard shboard className="flex-shrink-0 w-6 h-6 text-white transition duration-75  " />
+                            <LuLayoutDashboard className="flex-shrink-0 w-6 h-6 text-white transition duration-75  " />
                             <span className="flex-1 ms-3 whitespace-nowrap text-lg">Dashboard</span>
                         </Link>
                     </li>
