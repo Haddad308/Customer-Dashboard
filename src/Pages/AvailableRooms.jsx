@@ -1,15 +1,15 @@
-import NewsCards from "../Components/Cards/NewsCards"
+import RoomsCards from "../Components/Cards/RoomsCards"
 import BackButton from "../Components/BackButton";
 
-const News = () => {
+const AvailableRooms = () => {
     return (
         <div className="p-5" >
             <div className="mb-5" >
                 <BackButton />
             </div>
-            <NewsCards />
+            <RoomsCards />
         </div>
     )
 }
 
-export default News
+export default AvailableRooms

@@ -9,6 +9,7 @@ import { BsInfoCircle } from "react-icons/bs";
 import { LuCalendarDays, LuLayoutDashboard } from "react-icons/lu";
 import { Button } from "@nextui-org/react";
 import { FaPlus } from "react-icons/fa6";
+import { MdOutlineEmail } from "react-icons/md";
 
 const SideBar = ({ sidebarOpen }) => {
     return (
@@ -24,7 +25,7 @@ const SideBar = ({ sidebarOpen }) => {
                 <div className="w-full bg-gray-300 h-[1.5px] " ></div>
                 <ul className="my-2 font-medium">
                     <li>
-                        <Button className="flex items-center bg-[#74C1FC] p-5 mx-3 my-3  text-white  transition duration-75 rounded-3xl hover:bg-[#74C1FC] shadow-md group">
+                        <Button className="flex items-center bg-[#74C1FC] p-5 mx-3 my-3  text-white  transition duration-75 rounded-3xl hover:bg-[#74C1FC] border-2 border-[#2076AB] group">
                             <FaPlus className="flex-shrink-0 w-6 h-6 text-white transition duration-75  " />
                             <span className="flex-1 whitespace-nowrap text-lg font-semibold">New Booking</span>
                         </Button>
@@ -36,31 +37,31 @@ const SideBar = ({ sidebarOpen }) => {
                         </Link>
                     </li>
                     <li>
-                        <Link to={"/bookings"} className="flex items-center p-2 mx-3 mb-1  text-white rounded-lg transition duration-75 hover:bg-[#66b0de] focus:bg-[#66b0de] group">
+                        <Link to={"/Bookings"} className="flex items-center p-2 mx-3 mb-1  text-white rounded-lg transition duration-75 hover:bg-[#66b0de] focus:bg-[#66b0de] group">
                             <HiOutlineShoppingCart className="flex-shrink-0 w-6 h-6 text-white transition duration-75  " />
                             <span className="flex-1 ms-3 whitespace-nowrap text-lg">My Bookings</span>
                         </Link>
                     </li>
                     <li>
-                        <Link to={"/calendar"} className="flex items-center p-2 mx-3 mb-1 text-white rounded-lg transition duration-75 hover:bg-[#66b0de] focus:bg-[#66b0de] group">
+                        <Link to={"/Calendar"} className="flex items-center p-2 mx-3 mb-1 text-white rounded-lg transition duration-75 hover:bg-[#66b0de] focus:bg-[#66b0de] group">
                             <LuCalendarDays className="flex-shrink-0 w-6 h-6 text-white transition duration-75  " />
                             <span className="flex-1 ms-3 whitespace-nowrap text-lg">Booking Calendar</span>
                         </Link>
                     </li>
                     <li>
-                        <Link to={"/invoices"} className="flex items-center p-2 mx-3 mb-1 text-white rounded-lg transition duration-75 hover:bg-[#66b0de] focus:bg-[#66b0de] group">
+                        <Link to={"/Invoices"} className="flex items-center p-2 mx-3 mb-1 text-white rounded-lg transition duration-75 hover:bg-[#66b0de] focus:bg-[#66b0de] group">
                             <TbFileInvoice className="flex-shrink-0 w-6 h-6 text-white transition duration-75  " />
                             <span className="flex-1 ms-3 whitespace-nowrap text-lg">My Invoices</span>
                         </Link>
                     </li>
                     <li>
-                        <Link to={"/info"} className="flex items-center p-2 mx-3 mb-1 text-white rounded-lg transition duration-75 hover:bg-[#66b0de] focus:bg-[#66b0de] group">
+                        <Link to={"/Info"} className="flex items-center p-2 mx-3 mb-1 text-white rounded-lg transition duration-75 hover:bg-[#66b0de] focus:bg-[#66b0de] group">
                             <BsInfoCircle className="flex-shrink-0 w-6 h-6 text-white transition duration-75  " />
                             <span className="flex-1 ms-3 whitespace-nowrap text-lg">My Information</span>
                         </Link>
                     </li>
                     <li>
-                        <Link to={"/news"} className="flex items-center p-2 mx-3 mb-1 text-white rounded-lg transition duration-75 hover:bg-[#66b0de] focus:bg-[#66b0de] group">
+                        <Link to={"/News"} className="flex items-center p-2 mx-3 mb-1 text-white rounded-lg transition duration-75 hover:bg-[#66b0de] focus:bg-[#66b0de] group">
                             <IoNewspaperOutline className="flex-shrink-0 w-6 h-6 text-white transition duration-75  " />
                             <span className="flex-1 ms-3 whitespace-nowrap text-lg">News</span>
                         </Link>
@@ -69,6 +70,12 @@ const SideBar = ({ sidebarOpen }) => {
                         <Link to={"/FAQ"} className="flex items-center p-2 mx-3 mb-1 text-white rounded-lg transition duration-75 hover:bg-[#66b0de] focus:bg-[#66b0de] group">
                             <FaQuestion className="flex-shrink-0 w-6 h-6 text-white transition duration-75  " />
                             <span className="flex-1 ms-3 whitespace-nowrap text-lg">FAQ</span>
+                        </Link>
+                    </li>
+                    <li>
+                        <Link to={"/ContactUs"} className="flex items-center p-2 mx-3 mb-1 text-white rounded-lg transition duration-75 hover:bg-[#66b0de] focus:bg-[#66b0de] group">
+                            <MdOutlineEmail className="flex-shrink-0 w-6 h-6 text-white transition duration-75  " />
+                            <span className="flex-1 ms-3 whitespace-nowrap text-lg">Contact Us</span>
                         </Link>
                     </li>
                     <li>
