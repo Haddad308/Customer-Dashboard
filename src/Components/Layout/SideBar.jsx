@@ -25,8 +25,8 @@ const SideBar = ({ sidebarOpen }) => {
                 <div className="w-full bg-gray-300 h-[1.5px] " ></div>
                 <ul className="my-2 font-medium">
                     <li>
-                        <Button className="flex items-center bg-[#74C1FC] p-5 mx-3 my-3  text-white  transition duration-75 rounded-3xl hover:bg-[#74C1FC] border-2 border-[#2076AB] group">
-                            <FaPlus className="flex-shrink-0 w-6 h-6 text-white transition duration-75  " />
+                        <Button className="flex items-center bg-white p-5 mx-3 my-3  text-black  transition duration-75 rounded-3xl shadow-md  group">
+                            <FaPlus className="flex-shrink-0 w-6 h-6 text-black transition duration-75  " />
                             <span className="flex-1 whitespace-nowrap text-lg font-semibold">New Booking</span>
                         </Button>
                     </li>

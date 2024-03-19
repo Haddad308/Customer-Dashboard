@@ -17,6 +17,7 @@ import AvailableRooms from "./Pages/AvailableRooms"
 import AvailableOffices from "./Pages/AvailableOffices"
 import Item from "./Pages/Item"
 import ContactUs from "./Pages/ContactUs"
+import Booking from "./Pages/Booking"
 
 function App() {
 
@@ -36,6 +37,7 @@ function App() {
         { path: "Events", element: <Events /> },
         { path: "item", element: <Item /> },
         { path: "ContactUs", element: <ContactUs /> },
+        { path: "booking", element: <Booking /> },
       ]
     },
     { path: "unauthorized", element: <UnAuthorized /> },

@@ -52,12 +52,12 @@ const RoomsCards = () => {
                                     <Facilitties />
                                 </p>
                             </div>
-                            <CardDescription />                           <AvailableTime />
+                            <CardDescription />
+                            <AvailableTime />
                             <Features />
                         </CardFooter>
                     </Link>
                 </Card>
-
             ))}
         </div>
     )

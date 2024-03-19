@@ -8,7 +8,11 @@ const tailwindConfig = {
     "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}"
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        primary: '#248ED0'
+      }
+    },
     fontFamily: {
       'cairo': ['Cairo', 'sans-serif']
     }
