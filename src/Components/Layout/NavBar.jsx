@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import { IoMenu } from "react-icons/io5";
 import { IoIosArrowDown } from "react-icons/io";
 import { useLocation } from "react-router-dom";
+import { FaPlus } from "react-icons/fa6";
 
 const NavBar = ({ toggleSidebar }) => {
     const [selectedKeys, setSelectedKeys] = useState(new Set(["English (US)"]));
@@ -24,6 +25,12 @@ const NavBar = ({ toggleSidebar }) => {
                     <IoMenu size={35} className="ms-4  transition-all duration-300 hover:text-[#0070F0]" />
                 </button>
                 <h3 className="ms-5 text-2xl font-semibold mb-1" > {pathname} </h3>
+            </div>
+            <div>
+                <Button variant="shadow" className="flex items-center bg-primary p-5 mx-3 my-3  text-white  transition duration-75 rounded-xl shadow-md  group">
+                    <FaPlus className="flex-shrink-0 w-6 h-6 text-white transition duration-75  " />
+                    <span className="flex-1 whitespace-nowrap text-lg font-semibold">New Booking</span>
+                </Button>
             </div>
             <div className="flex items-center gap-3" >
                 <Dropdown >

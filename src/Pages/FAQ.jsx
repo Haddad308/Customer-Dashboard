@@ -1,4 +1,6 @@
-import { Accordion, AccordionItem } from "@nextui-org/react";
+import { Accordion, AccordionItem, Button } from "@nextui-org/react";
+import { EditIcon } from "../Components/Table/EditIcon";
+import { DeleteIcon } from "../Components/Table/DeleteIcon";
 
 const FaQ = () => {
     const defaultContent =
@@ -6,6 +8,17 @@ const FaQ = () => {
 
     return (
         <div className="p-5" >
+            <div className=" pb-3 flex justify-end gap-3 pe-1" >
+                <Button color="danger" variant="faded" >
+                    <DeleteIcon />
+                    Delete
+                </Button>
+                <Button color="primary" className="font-semibold">
+                    <EditIcon />
+                    <p>Edit</p>
+                </Button>
+
+            </div>
             <Accordion className="bg-white" variant="bordered" selectionMode="multiple">
                 <AccordionItem key="1" aria-label="Accordion 1" title="Accordion 1">
                     {defaultContent}
@@ -18,7 +31,7 @@ const FaQ = () => {
                 </AccordionItem>
             </Accordion>
         </div>
-       
+
     )
 }
 

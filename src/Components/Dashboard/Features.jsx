@@ -2,9 +2,10 @@ import { FaBuilding } from "react-icons/fa";
 import { GiStack } from "react-icons/gi";
 import { FaUser } from "react-icons/fa";
 import { IoBag } from "react-icons/io5";
+
 const Features = () => {
     return (
-        <div className="flex gap-2  self-center justify-stretch w-full" >
+        <div className="flex gap-4  self-center justify-center w-full" >
             <div className="flex items-center gap-1" >
                 <FaBuilding />
                 <p>Odenplan</p>

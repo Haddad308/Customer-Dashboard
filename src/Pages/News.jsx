@@ -1,12 +1,10 @@
 import NewsCards from "../Components/Cards/NewsCards"
-import BackButton from "../Components/BackButton";
+import NavSearch from "../Components/Layout/NavSearch";
 
 const News = () => {
     return (
         <div className="p-5" >
-            <div className="mb-5" >
-                <BackButton />
-            </div>
+            <NavSearch/>
             <NewsCards />
         </div>
     )

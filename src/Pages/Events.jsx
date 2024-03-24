@@ -1,12 +1,11 @@
-import BackButton from "../Components/BackButton"
+
 import Event from "../Components/Dashboard/Event"
+import NavSearch from "../Components/Layout/NavSearch"
 
 const Events = () => {
   return (
     <div className="p-5  " >
-      <div className="mb-5" >
-        <BackButton />
-      </div>
+      <NavSearch/>
       <div className="flex flex-col gap-4">
         <Event />
         <Event />

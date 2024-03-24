@@ -1,11 +1,9 @@
 import OfficesCards from "../Components/Cards/OfficesCards"
-import BackButton from "../Components/BackButton";
+import NavSearch from "../Components/Layout/NavSearch";
 const AvailableOffices = () => {
   return (
     <div className="p-5" >
-      <div className="mb-5" >
-        <BackButton />
-      </div>
+      <NavSearch/>
       <OfficesCards className="w-6" />
     </div>
   )
