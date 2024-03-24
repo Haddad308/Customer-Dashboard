@@ -4,6 +4,7 @@ import { EditIcon } from "./EditIcon";
 import { DeleteIcon } from "./DeleteIcon";
 import { EyeIcon } from "./EveIcon";
 import { columns, users } from "./data";
+import { Link } from "react-router-dom";
 
 const statusColorMap = {
     active: "success",
@@ -43,9 +44,11 @@ export default function TAble() {
                 return (
                     <div className="relative flex items-center gap-2">
                         <Tooltip content="Details">
-                            <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
-                                <EyeIcon />
-                            </span>
+                            <Link to={"/booking"} >
+                                <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
+                                    <EyeIcon />
+                                </span>
+                            </Link>
                         </Tooltip>
                         <Tooltip content="Edit user">
                             <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
