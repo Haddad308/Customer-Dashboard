@@ -1,26 +1,27 @@
+/* eslint-disable react/prop-types */
 import { FaBuilding } from "react-icons/fa";
 import { GiStack } from "react-icons/gi";
 import { FaUser } from "react-icons/fa";
 import { IoBag } from "react-icons/io5";
 
-const Features = () => {
+const Features = ({building,floor,users,price}) => {
     return (
         <div className="flex gap-4  self-center justify-center w-full" >
             <div className="flex items-center gap-1" >
                 <FaBuilding />
-                <p>Odenplan</p>
+                <p>{building}</p>
             </div>
             <div className="flex items-center gap-1" >
                 <GiStack />
-                <p>Floor 6 </p>
+                <p>{floor}</p>
             </div>
             <div className="flex items-center gap-1" >
                 <FaUser />
-                <p>10</p>
+                <p>{users}</p>
             </div>
             <div className="flex items-center gap-1" >
                 <IoBag />
-                <p>10.000/Man</p>
+                <p>{price}</p>
             </div>
         </div>
     )

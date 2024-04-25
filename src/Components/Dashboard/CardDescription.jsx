@@ -1,8 +1,9 @@
+/* eslint-disable react/prop-types */
 
-const CardDescription = () => {
+const CardDescription = ({text}) => {
     return (
         <p className="text-left" >
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Modi necessitatibus temporibus minima quisquam debitis nihil natus nulla quidem unde a &nbsp;
+            {text.slice(0,200)}
             <span className="text-blue-500 font-semibold  hover:underline  " >View More... </span>
         </p>
     )

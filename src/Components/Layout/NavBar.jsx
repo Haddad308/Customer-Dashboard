@@ -3,12 +3,12 @@ import { useState } from "react";
 import { Avatar, Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from "@nextui-org/react";
 import { IoMenu } from "react-icons/io5";
 import { IoIosArrowDown } from "react-icons/io";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { FaPlus } from "react-icons/fa6";
 
 const NavBar = ({ toggleSidebar }) => {
-    const [selectedLanguage, setSelectedLanguage] = useState("English (US)");
 
+    const [selectedLanguage, setSelectedLanguage] = useState("English (US)");
     const location = useLocation();
     let { pathname } = location;
     pathname = pathname.slice(1);
@@ -27,10 +27,10 @@ const NavBar = ({ toggleSidebar }) => {
                 <h3 className="ms-5 text-2xl font-semibold mb-1" > {pathname} </h3>
             </div>
             <div className="ms-24">
-                <Button variant="shadow" className="flex items-center bg-primary p-5 mx-3 my-3  text-white  transition duration-75 rounded-xl shadow-md  group">
-                    <FaPlus className="flex-shrink-0 w-6 h-6 text-white transition duration-75  " />
-                    <span className="flex-1 whitespace-nowrap text-lg font-semibold">New Booking</span>
-                </Button>
+                <Link to={"/calendar"} className="flex items-center bg-primary px-3 py-2 hover:bg-primary-600   text-white  transition duration-75 rounded-xl shadow-md  group" >
+                        <FaPlus className="flex-shrink-0 w-6 h-6 text-white transition duration-75  " />
+                        <span className="flex-1 whitespace-nowrap text-lg font-semibold">New Booking</span>
+                </Link>
             </div>
             <div className="flex items-center gap-3 " >
                 <Dropdown className="w-20 " >

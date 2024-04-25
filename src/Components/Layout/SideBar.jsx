@@ -4,11 +4,12 @@ import { MdOutlineMapsHomeWork } from "react-icons/md";
 import { HiOutlineShoppingCart } from "react-icons/hi2";
 import { FaQuestion } from "react-icons/fa";
 import { IoNewspaperOutline } from "react-icons/io5";
-import { TbFileInvoice, TbLogout2 } from "react-icons/tb";
+import { TbFileInvoice } from "react-icons/tb";
 import { BsInfoCircle } from "react-icons/bs";
 import { LuCalendarDays, LuLayoutDashboard } from "react-icons/lu";
 
 import { MdOutlineEmail } from "react-icons/md";
+import { LogOut } from "../logOut";
 
 const SideBar = ({ sidebarOpen }) => {
     return (
@@ -23,7 +24,7 @@ const SideBar = ({ sidebarOpen }) => {
             <div className={`  ${sidebarOpen ? "" : "hidden"}`}>
                 <div className="w-full bg-gray-300 h-[1.5px] " ></div>
                 <ul className="my-2 font-medium">
-                    
+
                     <li>
                         <Link to={"/"} className="flex items-center p-2 mx-3 mb-1 text-white rounded-lg transition duration-75 hover:bg-[#66b0de] focus:bg-[#66b0de] group">
                             <LuLayoutDashboard className="flex-shrink-0 w-6 h-6 text-white transition duration-75  " />
@@ -72,12 +73,7 @@ const SideBar = ({ sidebarOpen }) => {
                             <span className="flex-1 ms-3 whitespace-nowrap text-lg">Contact Us</span>
                         </Link>
                     </li>
-                    <li>
-                        <Link to={"/"} className="flex items-center p-2 mx-3 mb-1  text-white hover:text-red-500 rounded-lg  transition duration-75 hover:bg-[#66b0de] focus:bg-[#66b0de] group">
-                            <TbLogout2 className="flex-shrink-0 w-6 h-6 text-white transition duration-75 group-hover:text-red-500 " />
-                            <span className="flex-1 ms-3 whitespace-nowrap text-lg">Logout</span>
-                        </Link>
-                    </li>
+                    <LogOut />
                 </ul>
             </div>
         </div>

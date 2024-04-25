@@ -1,21 +1,45 @@
 
-import Event from "../Components/Dashboard/Event"
+import { useEffect, useState } from "react";
+import Event from "../Components/Dashboard/Event" 
 import NavSearch from "../Components/Layout/NavSearch"
+import { getEvents } from "./Dashboard/handlers";
 
 const Events = () => {
+
+  const [events, setEvents] = useState([]);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [filtered, setFiltered] = useState([]);
+
+  function handleSearch(query) {
+    setSearchQuery(query);
+    const filteredTemplates = events.filter(event =>
+      event.title.toLowerCase().includes(query.toLowerCase())
+    );
+    setFiltered(filteredTemplates);
+  }
+
+  useEffect(() => {
+    getEvents(setEvents)
+  }, [])
+
+  useEffect(() => {
+    const filteredEvents = events.filter(event =>
+      event.title.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+    setFiltered(filteredEvents);
+  }, [events, searchQuery]);
+
   return (
     <div className="p-5  " >
-      <NavSearch/>
+      <NavSearch handleSearch={handleSearch} searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
       <div className="flex flex-col gap-4">
-        <Event />
-        <Event />
-        <Event />
-        <Event />
-        <Event />
-        <Event />
-        <Event />
-        <Event />
-        <Event />
+        {events.length > 0 ? (
+          filtered.map(({ title, image, description }, index) => (
+            <Event key={index} title={title} image={image} description={description} height={"10px"} width={"w-1/6"} viewMore={false} />
+          ))
+        ) : (
+          <p>Loading...</p>
+        )}
       </div>
     </div>
   )

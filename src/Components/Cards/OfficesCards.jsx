@@ -1,63 +1,39 @@
+/* eslint-disable react/prop-types */
 import { Card, CardBody, CardFooter, Image } from "@nextui-org/react"
-import test3 from "../../assets/fa60f4784fc700982548e2679937a694.jpeg"
-import test4 from "../../assets/test4.jpeg"
 import { useContext } from "react";
 import { sideBarOpen } from "../../contexts/SideBarOpen";
 import Features from "../Dashboard/Features";
 import CardDescription from "../Dashboard/CardDescription";
+import { Link } from "react-router-dom";
 
 
-const OfficesCards = () => {
+const OfficesCards = ({ officeRooms }) => {
   const [sidebarOpens,] = useContext(sideBarOpen);
-  const list = [
-    {
-      title: "Orange",
-      img: test3,
-      price: "$5.50",
-    },
-    {
-      title: "Tangerine",
-      img: test3,
-      price: "$3.00",
-    },
-    {
-      title: "Raspberry",
-      img: test3,
-      price: "$10.00",
-    }, {
-      title: "Raspberry",
-      img: test3,
-      price: "$10.00",
-    }, {
-      title: "Raspberry",
-      img: test3,
-      price: "$10.00",
-    }
-  ];
+
 
   return (
     <div className={`gap-3 grid grid-cols-2  ${sidebarOpens ? "sm:grid-cols-3" : "sm:grid-cols-4"} `}>
-      {list.map((item, index) => (
+      {officeRooms?.map((item, index) => (
         <Card shadow="sm" key={index} isPressable onPress={() => console.log("item pressed")}>
-          <CardBody className="overflow-visible p-0">
-            <Image
-              shadow="sm"
-              radius="lg"
-              width="100%"
-              alt={item.title}
-              className="w-full object-cover h-[140px]"
-              src={test4}
-            />
-          </CardBody>
-          <CardFooter className="text-small flex flex-col items-start gap-2 p-3">
-            <div className="flex justify-between  w-full" >
-              <b>{item.title}</b>
-
-            </div>
-            <CardDescription />
-
-            <Features />
-          </CardFooter>
+          <Link to={`/office/${item.id}`} >
+            <CardBody className="overflow-visible p-0">
+              <Image
+                shadow="sm"
+                radius="lg"
+                width="100%"
+                alt={item.name}
+                className="w-full object-fill h-[140px]"
+                src={item && item.image ? `http://highnox.site${item.image}` : "https://t3.ftcdn.net/jpg/02/48/42/64/360_F_248426448_NVKLywWqArG2ADUxDq6QprtIzsF82dMF.jpg"}
+              />
+            </CardBody>
+            <CardFooter className="text-small flex flex-col items-start gap-2 p-3">
+              <div className="flex justify-between  w-full" >
+                <b>{item.name}</b>
+              </div>
+              <CardDescription text={"lorem lorem lorem loremlorem loremlorem loremlorem lorem"} />
+              <Features />
+            </CardFooter>
+          </Link>
         </Card>
       ))}
     </div>
