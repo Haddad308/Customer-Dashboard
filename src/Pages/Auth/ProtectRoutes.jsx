@@ -9,7 +9,7 @@ export default function ProtectRoutes({ children }) {
         return children
     }
     else {
-        return <Navigate to={"/unauthorized"} state={{ from: location }} replace />
+        return <Navigate to={"/login"} state={{ from: location }} replace />
     }
 
 }
