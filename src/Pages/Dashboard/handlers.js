@@ -84,24 +84,7 @@ async function getNews(setOfficeRooms, limit) {
     }
 }
 
-async function getFloors() {
 
-
-    const options = {
-        method: 'GET', // Change method to POST
-        url: `${BASE_URL}/get_floor?floor_id=1`,
-    };
-
-    try {
-        await axios(options, {
-            headers: {
-                'token': token,
-            }
-        });
-    } catch (error) {
-        console.error('Error:', error);
-    }
-}
 
 async function deleteBooking(id, callback) {
     try {
@@ -124,6 +107,5 @@ export {
     getEvents,
     getMeetingRooms,
     getOfficeRooms,
-    getNews,
-    getFloors
+    getNews
 }

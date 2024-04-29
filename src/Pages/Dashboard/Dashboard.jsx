@@ -4,7 +4,7 @@ import MeetingRooms from "../../Components/Dashboard/MeetingRooms"
 import OfficeRooms from "../../Components/Dashboard/OfficeRooms"
 import News from "../../Components/Dashboard/News"
 import BookingTable from "../../Components/Tables/BookingTable"
-import { getBookings, getEvents, getFloors } from "./handlers"
+import { getBookings, getEvents } from "./handlers"
 import { useEffect, useState } from "react"
 import { Toaster } from "react-hot-toast";
 
@@ -24,7 +24,6 @@ const Dashboard = () => {
     useEffect(() => {
         getBookings(setBooking, SetIsLoading);
         getEvents(setEvents,)
-        getFloors()
     }, [])
 
     return (
