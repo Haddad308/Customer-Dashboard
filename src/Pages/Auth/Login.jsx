@@ -23,8 +23,9 @@ const Login = () => {
         setError("");
         try {
             const response = await axios.post("https://highnox.site/highnox/login", UserData);
-            console.log(response?.data.result.data.token);
-            const token = response?.data.result.data.token;
+            console.log("My res", response?.data.data.token);
+            console.log(response?.data.data.token);
+            const token = response?.data.data.token;
             setIsLoading(false)
             navigate('/');
             SetToken(token);
