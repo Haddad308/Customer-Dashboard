@@ -3,26 +3,31 @@ import toast from "react-hot-toast";
 const cancel = () => toast.success('The booking cancelled successfully.');
 const cancelled = () => toast.error('This booking is already cancelled.');
 
-const BASE_URL = "https://highnox.site/highnox";
+const BASE_URL = "http://146.190.50.2:8069/highnox";
 const token = localStorage.getItem("userTokenC");
 
-async function getBookings(setBooking, SetIsLoading, status = "") {
-    SetIsLoading(true)
-    let data = await axios.get(`${BASE_URL}/booking/${status ? `?status=${status}` : ""}`, {
-        headers: {
-            'token': token,
-        }
-    }
-    ).catch((error) => {
-        console.error("test 312", error);
-        SetIsLoading(false)
-    });
+async function getBookings(setBooking, setIsLoading, status = "") {
+    setIsLoading(true);
+    try {
+        const response = await axios.get(`${BASE_URL}/booking/${status ? `?status=${status}` : ""}`, {
+            headers: {
+                'token': token,
+                'Access-Control-Allow-Credentials': true,
+                'Access-Control-Allow-Methods': '*',
+                'Access-Control-Allow-Origin': 'http://localhost:5173'
+            }
+        });
 
-    if (data?.status === 200) {
-        setBooking(data.data.data);
-        SetIsLoading(false)
+        if (response.status === 200) {
+            setBooking(response.data.data);
+            setIsLoading(false);
+        }
+    } catch (error) {
+        console.error("Error:", error);
+        setIsLoading(false);
     }
 }
+
 
 async function getEvents(setEvents) {
     let data = await axios.get(`${BASE_URL}/events`, {
