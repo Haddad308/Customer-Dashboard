@@ -22,10 +22,13 @@ const ContactUs = () => {
     async function contactUsFun(UserData) {
         setIsLoading(true)
         try {
-            const response = await axios.post("https://highnox.site/highnox/contact_us", UserData, {
+            const response = await axios.post(`https://highnox.site/highnox/contact_us?token=${token}`, UserData, {
                 headers: {
-                    'token': token,
-                }
+                    "Content-Type": "application/json",
+                    "Accept": "application/json",
+                },
+                data: JSON.stringify({}),
+                withCredentials: false
             });
             console.log(response.data);
             setIsLoading(false)

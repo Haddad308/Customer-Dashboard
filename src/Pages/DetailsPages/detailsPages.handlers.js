@@ -5,10 +5,13 @@ const token = localStorage.getItem("userTokenC");
 
 
 async function getRoomDetails(setMeetingRoom, id) {
-    let data = await axios.get(`${BASE_URL}/meeting_room?room_id=${id}`, {
+    let data = await axios.get(`${BASE_URL}/meeting_room?room_id=${id}&token=${token}`, {
         headers: {
-            'token': token,
-        }
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+        },
+        data: JSON.stringify({}),
+        withCredentials: false
     }
     ).catch((error) => {
         console.log(error);
@@ -21,10 +24,13 @@ async function getRoomDetails(setMeetingRoom, id) {
 
 async function getOfficeDetails(setOfficeRoom, id) {
     console.log("hi Test");
-    let data = await axios.get(`${BASE_URL}/office_room?room_id=${id}`, {
+    let data = await axios.get(`${BASE_URL}/office_room?room_id=${id}&token=${token}`, {
         headers: {
-            'token': token,
-        }
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+        },
+        data: JSON.stringify({}),
+        withCredentials: false
     }
     ).catch((error) => {
         console.log(error);
@@ -37,10 +43,13 @@ async function getOfficeDetails(setOfficeRoom, id) {
 
 async function getNewsDetails(setNews, id) {
     console.log("hi Test");
-    let data = await axios.get(`${BASE_URL}/news?news_id=${id}`, {
+    let data = await axios.get(`${BASE_URL}/news?news_id=${id}&token=${token}`, {
         headers: {
-            'token': token,
-        }
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+        },
+        data: JSON.stringify({}),
+        withCredentials: false
     }
     ).catch((error) => {
         console.log(error);

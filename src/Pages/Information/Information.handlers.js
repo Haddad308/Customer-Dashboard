@@ -10,24 +10,35 @@ const BASE_URL = "https://highnox.site/highnox";
 
 
 async function editUserInfo(UserInfo, setIsLoading) {
-    setIsLoading(true)
+    setIsLoading(true);
     try {
-        const response = await axios.put("/user", UserInfo);
+        const response = await axios.put(`${BASE_URL}/user?token=${token}`, UserInfo, {
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+            },
+            withCredentials: false
+        });
         console.log(response.data);
-        setIsLoading(false)
+        setIsLoading(false);
+        // Assuming notify() is defined or imported somewhere
         notify();
     } catch (error) {
         console.error(error);
-        setIsLoading(false)
+        setIsLoading(false);
     }
 }
 
+
 async function getUserData(setUserData, SetIsLoading) {
     SetIsLoading(true)
-    let data = await axios.get(`${BASE_URL}/user`, {
+    let data = await axios.get(`${BASE_URL}/user?token=${token}`, {
         headers: {
-            'token': token,
-        }
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+        },
+        data: JSON.stringify({}),
+        withCredentials: false
     }
     ).catch((error) => {
         console.error("test 312", error);
@@ -42,8 +53,8 @@ async function getUserData(setUserData, SetIsLoading) {
 }
 
 
-function 
-createFormData(data, file) {
+function
+    createFormData(data, file) {
     const formData = new FormData();
 
     // Append data object to FormData

@@ -11,10 +11,13 @@ const token = localStorage.getItem("userTokenC");
 
 async function getFAQ(setFAQ, SetIsLoading) {
     SetIsLoading(true)
-    let data = await axios.get(`${BASE_URL}/fandq/read`, {
+    let data = await axios.get(`${BASE_URL}/fandq/read?token=${token}`, {
         headers: {
-            'token': token,
-        }
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+        },
+        data: JSON.stringify({}),
+        withCredentials: false
     }
     ).catch((error) => {
         console.error("test 312", error);
@@ -29,10 +32,13 @@ async function getFAQ(setFAQ, SetIsLoading) {
 
 async function AddQuestion(values, SetIsLoading, callback) {
     SetIsLoading(true)
-    let data = await axios.post(`${BASE_URL}/fandq/create`, values, {
+    let data = await axios.post(`${BASE_URL}/fandq/create?token=${token}`, values, {
         headers: {
-            'token': token,
-        }
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+        },
+        data: JSON.stringify({}),
+        withCredentials: false
     }
     ).catch((error) => {
         console.error("test 312", error);
@@ -48,10 +54,13 @@ async function AddQuestion(values, SetIsLoading, callback) {
 
 async function DeleteQuestion({ id }, callback) {
     console.log("my ID",id);
-    let data = await axios.delete(`${BASE_URL}/fandq/delete?f_and_q_id=${id}`, {
+    let data = await axios.delete(`${BASE_URL}/fandq/delete?f_and_q_id=${id}&token=${token}`, {
         headers: {
-            'token': token,
-        }
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+        },
+        // data: JSON.stringify({}),
+        withCredentials: false
     }
     ).catch((error) => {
         console.error(error);
@@ -65,10 +74,13 @@ async function DeleteQuestion({ id }, callback) {
 
 async function UpdateQuestion(values, callback) {
     
-    let data = await axios.put(`${BASE_URL}/fandq/update?f_and_q_id=${values.id}`, values, {
+    let data = await axios.put(`${BASE_URL}/fandq/update?f_and_q_id=${values.id}&token=${token}`, values, {
         headers: {
-            'token': token,
-        }
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+        },
+        // data: JSON.stringify({}),
+        withCredentials: false
     }
     ).catch((error) => {
         console.error(error);

@@ -5,10 +5,13 @@ const token = localStorage.getItem("userTokenC");
 
 async function getCalenderData(setCalendar, SetIsLoading) {
     SetIsLoading(true)
-    let data = await axios.get(`${BASE_URL}/booking_calendar`, {
+    let data = await axios.get(`${BASE_URL}/booking_calendar?token=${token}`, {
         headers: {
-            'token': token,
-        }
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+        },
+        data: JSON.stringify({}),
+        withCredentials: false
     }
     ).catch((error) => {
         console.error(error);

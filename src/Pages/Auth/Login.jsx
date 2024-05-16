@@ -22,9 +22,7 @@ const Login = () => {
         setIsLoading(true)
         setError("");
         try {
-            const response = await axios.post("http://146.190.50.2:8069/highnox/login", UserData);
-            console.log("My res", response?.data.data.token);
-            console.log(response?.data.data.token);
+            const response = await axios.post("https://highnox.site/highnox/login", UserData);
             const token = response?.data.data.token;
             setIsLoading(false)
             navigate('/');

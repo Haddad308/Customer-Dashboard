@@ -3,19 +3,20 @@ import toast from "react-hot-toast";
 const cancel = () => toast.success('The booking cancelled successfully.');
 const cancelled = () => toast.error('This booking is already cancelled.');
 
-const BASE_URL = "http://146.190.50.2:8069/highnox";
+const BASE_URL = "https://highnox.site/highnox";
 const token = localStorage.getItem("userTokenC");
 
+// *Done
 async function getBookings(setBooking, setIsLoading, status = "") {
     setIsLoading(true);
     try {
-        const response = await axios.get(`${BASE_URL}/booking/${status ? `?status=${status}` : ""}`, {
+        const response = await axios.get(`${BASE_URL}/booking/?token=${token}${status ? `&status=${status}` : ""}`, {
             headers: {
-                'token': token,
-                'Access-Control-Allow-Credentials': true,
-                'Access-Control-Allow-Methods': '*',
-                'Access-Control-Allow-Origin': 'http://localhost:5173'
-            }
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+            },
+            data: JSON.stringify({}),
+            withCredentials: false
         });
 
         if (response.status === 200) {
@@ -28,12 +29,15 @@ async function getBookings(setBooking, setIsLoading, status = "") {
     }
 }
 
-
+// *Done
 async function getEvents(setEvents) {
-    let data = await axios.get(`${BASE_URL}/events`, {
+    let data = await axios.get(`${BASE_URL}/events?token=${token}`, {
         headers: {
-            'token': token,
-        }
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+        },
+        data: JSON.stringify({}),
+        withCredentials: false
     }
     ).catch((error) => {
         console.error(error);
@@ -44,11 +48,15 @@ async function getEvents(setEvents) {
     }
 }
 
+// *Done
 async function getMeetingRooms(setMeetingRooms, limit) {
-    let data = await axios.get(`${BASE_URL}/meeting_room?limit=${limit}`, {
+    let data = await axios.get(`${BASE_URL}/meeting_room?limit=${limit}&token=${token}`, {
         headers: {
-            'token': token,
-        }
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+        },
+        data: JSON.stringify({}),
+        withCredentials: false
     }
     ).catch((error) => {
         console.error(error);
@@ -59,11 +67,15 @@ async function getMeetingRooms(setMeetingRooms, limit) {
     }
 }
 
+// *Done
 async function getOfficeRooms(setOfficeRooms, limit) {
-    let data = await axios.get(`${BASE_URL}/office_room?limit=${limit}`, {
+    let data = await axios.get(`${BASE_URL}/office_room?limit=${limit}&token=${token}`, {
         headers: {
-            'token': token,
-        }
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+        },
+        data: JSON.stringify({}),
+        withCredentials: false
     }
     ).catch((error) => {
         console.error(error);
@@ -74,11 +86,15 @@ async function getOfficeRooms(setOfficeRooms, limit) {
     }
 }
 
+// *Done
 async function getNews(setOfficeRooms, limit) {
-    let data = await axios.get(`${BASE_URL}/news?limit=${limit}`, {
+    let data = await axios.get(`${BASE_URL}/news?limit=${limit}&token=${token}`, {
         headers: {
-            'token': token,
-        }
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+        },
+        data: JSON.stringify({}),
+        withCredentials: false
     }
     ).catch((error) => {
         console.error(error);
@@ -89,14 +105,15 @@ async function getNews(setOfficeRooms, limit) {
     }
 }
 
-
-
+// *Done
 async function deleteBooking(id, callback) {
     try {
-        await axios.get(`${BASE_URL}/cancel_booking?id=${id}`, {
+        await axios.get(`${BASE_URL}/cancel_booking?id=${id}&token=${token}`, {
             headers: {
-                'token': token,
-            }
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+            },
+            withCredentials: false
         });
         callback();
         cancel();

@@ -9,10 +9,13 @@ const BASE_URL = "https://highnox.site/highnox";
 
 async function getInvoices(setInvoicesData, SetIsLoading,paid) {
     SetIsLoading(true)
-    let data = await axios.get(`${BASE_URL}/invoices/?paid=${paid}`, {
+    let data = await axios.get(`${BASE_URL}/invoices/?paid=${paid}&token=${token}`, {
         headers: {
-            'token': token,
-        }
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+        },
+        data: JSON.stringify({}),
+        withCredentials: false
     }
     ).catch((error) => {
         console.error("test 312", error);
