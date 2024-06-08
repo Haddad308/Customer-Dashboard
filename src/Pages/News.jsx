@@ -3,6 +3,7 @@ import NewsCards from "../Components/Cards/NewsCards"
 import NavSearch from "../Components/Layout/NavSearch";
 import { getNews } from "./Dashboard/handlers";
 import { tokenContext } from "../contexts/AuthProvidor";
+import { useLang } from "../hooks/uselang";
 
 const News = () => {
 
@@ -10,6 +11,7 @@ const News = () => {
     const [searchQuery, setSearchQuery] = useState('');
     const [filtered, setFiltered] = useState([]);
     const token = useContext(tokenContext);
+    const lang = useLang();
 
     function handleSearch(query) {
         setSearchQuery(query);
@@ -20,8 +22,8 @@ const News = () => {
     }
 
     useEffect(() => {
-        getNews(setNews, 2000, token);
-    }, [token])
+        getNews(setNews, 2000, token, lang);
+    }, [token, lang])
 
     useEffect(() => {
         const filteredEvents = news.filter(room =>

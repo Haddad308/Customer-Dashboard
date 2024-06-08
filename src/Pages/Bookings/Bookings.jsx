@@ -8,6 +8,7 @@ import Views from "./Views";
 import { getBookings } from "../Dashboard/handlers";
 import { Toaster } from "react-hot-toast";
 import { tokenContext } from "../../contexts/AuthProvidor";
+import { useLang } from "../../hooks/uselang";
 
 
 const Bookings = () => {
@@ -15,21 +16,22 @@ const Bookings = () => {
     const [selectedView, setSelectedView] = useState("normal");
     const [isLoading, SetIsLoading] = useState(false);
     const token = useContext(tokenContext);
+    const lang = useLang();
 
     const [active, setActive] = useState([])
     const [past, setPast] = useState([])
     const [cancelled, setCancelled] = useState([])
 
     useEffect(() => {
-        getBookings(setActive, SetIsLoading, "canceled", token);
-        getBookings(setPast, SetIsLoading, "pending", token);
-        getBookings(setCancelled, SetIsLoading, "", token);
-    }, [selectedView, token])
+        getBookings(setActive, SetIsLoading, "canceled", token, lang);
+        getBookings(setPast, SetIsLoading, "pending", token, lang);
+        getBookings(setCancelled, SetIsLoading, "", token, lang);
+    }, [selectedView, token, lang])
 
     const handleDelete = () => {
-        getBookings(setActive, SetIsLoading, "canceled", token);
-        getBookings(setPast, SetIsLoading, "pending", token);
-        getBookings(setCancelled, SetIsLoading, "", token);
+        getBookings(setActive, SetIsLoading, "canceled", token, lang);
+        getBookings(setPast, SetIsLoading, "pending", token, lang);
+        getBookings(setCancelled, SetIsLoading, "", token, lang);
     };
 
     return (

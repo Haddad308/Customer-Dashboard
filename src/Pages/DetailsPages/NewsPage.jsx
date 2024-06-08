@@ -4,23 +4,22 @@ import { getNewsDetails } from "./detailsPages.handlers"
 import { useLocation } from "react-router-dom";
 import News from "../../Components/Dashboard/News"
 import { tokenContext } from "../../contexts/AuthProvidor";
+import { useLang } from "../../hooks/uselang";
 
 const NewsPage = () => {
 
     const token = useContext(tokenContext);
+    const lang = useLang();
     const [details, setDetails] = useState("");
 
     const location = useLocation();
     let { pathname } = location;
 
     const id = parseInt(pathname.slice(pathname.lastIndexOf("/") + 1));
-    console.log(id);
 
     useEffect(() => {
-        getNewsDetails(setDetails, id, token)
-    }, [id, token])
-
-    console.log(details);
+        getNewsDetails(setDetails, id, token, lang)
+    }, [id, token, lang])
 
     return (
         <div className="p-5">

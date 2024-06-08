@@ -1,8 +1,8 @@
 import { instance } from "../../Network/axios";
 
-async function getCalenderData(setCalendar, SetIsLoading, token) {
+async function getCalenderData(setCalendar, SetIsLoading, token, lang) {
     SetIsLoading(true)
-    let data = await instance.get(`/booking_calendar?token=${token}`, {
+    let data = await instance.get(`/booking_calendar?token=${token}&lang=${lang}`, {
         headers: {
             "Content-Type": "application/json",
             "Accept": "application/json",

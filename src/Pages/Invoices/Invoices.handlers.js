@@ -1,9 +1,9 @@
 import { instance } from "../../Network/axios";
 
 
-async function getInvoices(setInvoicesData, SetIsLoading, paid, token) {
+async function getInvoices(setInvoicesData, SetIsLoading, paid, token, lang) {
     SetIsLoading(true)
-    let data = await instance.get(`/invoices/?paid=${paid}&token=${token}`, {
+    let data = await instance.get(`/invoices/?paid=${paid}&token=${token}&lang=${lang}`, {
         headers: {
             "Content-Type": "application/json",
             "Accept": "application/json",

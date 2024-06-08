@@ -6,21 +6,22 @@ import { Toaster } from "react-hot-toast";
 import DeleteQ from "./DeleteQ";
 import EditQ from "./EditQ";
 import { tokenContext } from "../../contexts/AuthProvidor";
+import { useLang } from "../../hooks/uselang";
 
 const FaQ = () => {
 
     const [FAQ, setFAQ] = useState([]);
     const [, setIsLoading] = useState(false);
     const token = useContext(tokenContext);
-
+    const lang = useLang();
 
     const handleUpdate = () => {
-        getFAQ(setFAQ, setIsLoading, token)
+        getFAQ(setFAQ, setIsLoading, token, lang)
     };
 
     useEffect(() => {
-        getFAQ(setFAQ, setIsLoading, token)
-    }, [token])
+        getFAQ(setFAQ, setIsLoading, token, lang)
+    }, [token, lang])
 
     return (
         <>

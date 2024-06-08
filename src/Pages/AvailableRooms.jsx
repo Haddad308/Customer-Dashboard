@@ -3,6 +3,7 @@ import RoomsCards from "../Components/Cards/RoomsCards"
 import NavSearch from "../Components/Layout/NavSearch";
 import { getMeetingRooms } from "../Pages/Dashboard/handlers"
 import { tokenContext } from "../contexts/AuthProvidor";
+import { useLang } from "../hooks/uselang";
 
 const AvailableRooms = () => {
 
@@ -10,6 +11,7 @@ const AvailableRooms = () => {
     const [searchQuery, setSearchQuery] = useState('');
     const [filtered, setFiltered] = useState([]);
     const token = useContext(tokenContext);
+    const lang = useLang();
 
     function handleSearch(query) {
         setSearchQuery(query);
@@ -20,8 +22,8 @@ const AvailableRooms = () => {
     }
 
     useEffect(() => {
-        getMeetingRooms(setMeetingRooms, 2000, token);
-    }, [token])
+        getMeetingRooms(setMeetingRooms, 2000, token, lang);
+    }, [token, lang])
 
 
     useEffect(() => {

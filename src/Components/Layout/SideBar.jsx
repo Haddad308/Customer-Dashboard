@@ -7,18 +7,21 @@ import { IoNewspaperOutline } from "react-icons/io5";
 import { TbFileInvoice } from "react-icons/tb";
 import { BsInfoCircle } from "react-icons/bs";
 import { LuCalendarDays, LuLayoutDashboard } from "react-icons/lu";
-
+import { useTranslation } from "react-i18next";
 import { MdOutlineEmail } from "react-icons/md";
 import { LogOut } from "../logOut";
 
 const SideBar = ({ sidebarOpen }) => {
+
+    const { t } = useTranslation();
+
     return (
         <div id="SideBar" className={`bg-[#248ED0]  transition-all duration-300 ${sidebarOpen ? "w-[350px] " : "w-0 "} h-screen relative`}  >
             {/* !Play here */}
             <header className={` bg-[#2076ab] h-[80px] flex flex-col  justify-center     text-2xl font-bold ${sidebarOpen ? "px-5 " : "px-0"}    `}  >
                 <h1 className={`text-white flex gap-2 transition-all duration-400  relative ${sidebarOpen ? " delay-100 left-0" : "left-[-300px]"}`}   >
                     <MdOutlineMapsHomeWork size={35} />
-                    Co-Working Ltd
+                    {t("sidebar")}
                 </h1>
             </header>
             <div className={`  ${sidebarOpen ? "" : "hidden"}`}>

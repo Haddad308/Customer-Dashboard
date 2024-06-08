@@ -3,6 +3,7 @@ import OfficesCards from "../Components/Cards/OfficesCards"
 import NavSearch from "../Components/Layout/NavSearch";
 import { getOfficeRooms } from "./Dashboard/handlers";
 import { tokenContext } from "../contexts/AuthProvidor";
+import { useLang } from "../hooks/uselang";
 const AvailableOffices = () => {
 
 
@@ -10,6 +11,7 @@ const AvailableOffices = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [filtered, setFiltered] = useState([]);
   const token = useContext(tokenContext);
+  const lang = useLang();
 
 
   function handleSearch(query) {
@@ -22,8 +24,8 @@ const AvailableOffices = () => {
 
 
   useEffect(() => {
-    getOfficeRooms(setOfficeRooms, 2000, token);
-  }, [token])
+    getOfficeRooms(setOfficeRooms, 2000, token, lang);
+  }, [token, lang])
 
 
   useEffect(() => {

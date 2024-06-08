@@ -1,8 +1,8 @@
 import { instance } from "../../Network/axios";
 
 
-export default async function getBooking(setBooking, booking_id = "", token) {
-    let data = await instance.get(`/booking/?token=${token}${booking_id ? `&booking_id=${booking_id}` : ""}`, {
+export default async function getBooking(setBooking, booking_id = "", token, lang) {
+    let data = await instance.get(`/booking/?token=${token}${booking_id ? `&booking_id=${booking_id}` : ""}&lang=${lang}`, {
         headers: {
             "Content-Type": "application/json",
             "Accept": "application/json",

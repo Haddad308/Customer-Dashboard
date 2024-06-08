@@ -7,11 +7,13 @@ import { EditIcon } from "../../Components/Tables/EditIcon";
 import { UpdateQuestion } from "./FAQ.handlers";
 import { useContext } from "react";
 import { tokenContext } from "../../contexts/AuthProvidor";
+import { useLang } from "../../hooks/uselang";
 
 
 export default function EditQ({ data, handleUpdate }) {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const token = useContext(tokenContext);
+    const lang = useLang();
 
     const formHandler = useFormik({
         initialValues: {
@@ -28,8 +30,7 @@ export default function EditQ({ data, handleUpdate }) {
                 .required('description is required'),
         }),
         onSubmit: (values, { resetForm }) => {
-            console.log(values);
-            UpdateQuestion(values, handleUpdate, token);
+            UpdateQuestion(values, handleUpdate, token, lang);
             resetForm();
         }
     });

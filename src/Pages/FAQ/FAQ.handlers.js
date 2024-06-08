@@ -6,10 +6,10 @@ const updates = () => toast.success('Question updated successfully');
 
 
 
-async function getFAQ(setFAQ, SetIsLoading, token) {
+async function getFAQ(setFAQ, SetIsLoading, token, lang) {
     SetIsLoading(true)
     let data = await instance
-        .get(`/fandq/read?token=${token}`, {
+        .get(`/fandq/read?token=${token}&lang=${lang}`, {
             headers: {
                 "Content-Type": "application/json",
                 "Accept": "application/json",
@@ -28,10 +28,10 @@ async function getFAQ(setFAQ, SetIsLoading, token) {
     }
 }
 
-async function AddQuestion(values, SetIsLoading, callback, token) {
+async function AddQuestion(values, SetIsLoading, callback, token, lang) {
     SetIsLoading(true)
     let data = await instance
-        .post(`/fandq/create?token=${token}`, values, {
+        .post(`/fandq/create?token=${token}&lang=${lang}`, values, {
             headers: {
                 "Content-Type": "application/json",
                 "Accept": "application/json",
@@ -51,14 +51,14 @@ async function AddQuestion(values, SetIsLoading, callback, token) {
     }
 }
 
-async function DeleteQuestion({ id }, callback, token) {
+async function DeleteQuestion({ id }, callback, token, lang) {
     console.log("my ID", id);
 
     try {
         let response = await instance
             .request({
                 method: 'delete',
-                url: `/fandq/delete?token=${token}&f_and_q_id=${id}`,
+                url: `/fandq/delete?token=${token}&f_and_q_id=${id}&lang=${lang}`,
                 headers: {
                     "Content-Type": "application/json",
                     "Accept": "application/json",
@@ -76,10 +76,10 @@ async function DeleteQuestion({ id }, callback, token) {
 }
 
 
-async function UpdateQuestion(values, callback, token) {
+async function UpdateQuestion(values, callback, token, lang) {
 
     let data = await instance
-        .put(`/fandq/update?token=${token}&f_and_q_id=${values.id}`, values, {
+        .put(`/fandq/update?token=${token}&f_and_q_id=${values.id}&lang=${lang}`, values, {
             headers: {
                 "Content-Type": "application/json",
                 "Accept": "application/json",

@@ -2,10 +2,10 @@
 import { Avatar, Button, Input } from "@nextui-org/react"
 import { useFormik } from "formik";
 import { useContext, useEffect, useState } from "react"
-import toast from "react-hot-toast";
 import * as Yup from 'yup';
 import { createFormData, editUserInfo, getUserData } from "./Information.handlers";
 import { tokenContext } from "../../contexts/AuthProvidor";
+import { useLang } from "../../hooks/uselang";
 
 
 const Information = () => {
@@ -13,7 +13,7 @@ const Information = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [userInfo, setUserInfo] = useState([])
   const token = useContext(tokenContext);
-
+  const lang = useLang();
 
   // For Editing the user data.
   const formHandler = useFormik({
@@ -51,8 +51,7 @@ const Information = () => {
       related_partner: Yup.string(),
     }),
     onSubmit: (values) => {
-      console.log("hii");
-      editUserInfo(createFormData(values, userImage?.[0]), setUserInfo)
+      editUserInfo(createFormData(values, userImage?.[0]), setUserInfo, setIsLoading, token, lang)
     }
   });
 
@@ -63,12 +62,9 @@ const Information = () => {
   }
 
   useEffect(() => {
-    getUserData(setUserInfo, setIsLoading, token)
-  }, [token])
+    getUserData(setUserInfo, setIsLoading, token, lang)
+  }, [token, lang])
 
-  useEffect(() => {
-    console.log(userInfo);
-  }, [userInfo])
 
   return (
     <form className="p-5" onSubmit={formHandler.handleSubmit}>

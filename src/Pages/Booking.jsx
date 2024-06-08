@@ -6,11 +6,13 @@ import { useContext, useEffect, useState } from "react";
 import getBooking from "./Bookings/bookings.handler";
 import RentalDetailsTable from "./Bookings/RentalDetailsTable";
 import { tokenContext } from "../contexts/AuthProvidor";
+import { useLang } from "../hooks/uselang";
 
 
 const Booking = () => {
 
     const token = useContext(tokenContext);
+    const lang = useLang();
 
     const location = useLocation();
     let { pathname } = location;
@@ -19,8 +21,8 @@ const Booking = () => {
     const [booking, setBooking] = useState([]);
 
     useEffect(() => {
-        getBooking(setBooking, id, token)
-    }, [id, token])
+        getBooking(setBooking, id, token, lang)
+    }, [id, token, lang])
 
 
     return (

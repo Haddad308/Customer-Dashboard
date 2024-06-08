@@ -4,6 +4,7 @@ import { useContext, useEffect, useState } from "react";
 import { getInvoices } from "./Invoices.handlers";
 import InvoiceTable from "./InvoicesTable";
 import { tokenContext } from "../../contexts/AuthProvidor";
+import { useLang } from "../../hooks/uselang";
 
 const Invoices = () => {
 
@@ -11,12 +12,13 @@ const Invoices = () => {
     const [notPaidInvoices, setNotPaidInvoices] = useState([]);
     const [isLoading, setIsLoading] = useState(false)
     const token = useContext(tokenContext);
+    const lang = useLang();
 
 
     useEffect(() => {
-        getInvoices(setPaidInvoices, setIsLoading, "True", token)
-        getInvoices(setNotPaidInvoices, setIsLoading, "False", token)
-    }, [token])
+        getInvoices(setPaidInvoices, setIsLoading, "True", token, lang)
+        getInvoices(setNotPaidInvoices, setIsLoading, "False", token, lang)
+    }, [token, lang])
 
 
     return (

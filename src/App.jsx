@@ -22,6 +22,8 @@ import RoomPage from "./Pages/DetailsPages/RoomPage"
 import OfficePage from "./Pages/DetailsPages/OfficePage"
 import NewsPage from "./Pages/DetailsPages/NewsPage"
 
+
+import './i18n';
 function App() {
 
   const routers = createBrowserRouter([

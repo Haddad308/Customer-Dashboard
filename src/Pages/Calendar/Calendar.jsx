@@ -4,16 +4,18 @@ import { useContext, useEffect, useState } from "react";
 import { getCalenderData } from "./Calendar.handlers";
 import { useNavigate } from "react-router-dom";
 import { tokenContext } from "../../contexts/AuthProvidor";
+import { useLang } from "../../hooks/uselang";
 
 const CAlendar = () => {
 
     const [calendar, setCalendar] = useState([]);
     const [isLoading, setIsLoading] = useState([]);
     const token = useContext(tokenContext);
+    const lang = useLang();
 
     useEffect(() => {
-        getCalenderData(setCalendar, setIsLoading, token)
-    }, [token])
+        getCalenderData(setCalendar, setIsLoading, token, lang)
+    }, [token, lang])
 
     const navigate = useNavigate()
 

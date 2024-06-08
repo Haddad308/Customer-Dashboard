@@ -7,11 +7,13 @@ import { Select, SelectItem } from "@nextui-org/react";
 import { DeleteQuestion } from "./FAQ.handlers";
 import { useContext } from "react";
 import { tokenContext } from "../../contexts/AuthProvidor";
+import { useLang } from "../../hooks/uselang";
 
 
 export default function DeleteQ({ handleUpdate, data }) {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const token = useContext(tokenContext);
+    const lang = useLang();
 
     const formHandler = useFormik({
         initialValues: {
@@ -23,7 +25,7 @@ export default function DeleteQ({ handleUpdate, data }) {
         }),
         onSubmit: (values, { resetForm }) => {
             console.log("Hew 1");
-            DeleteQuestion(values, handleUpdate, token);
+            DeleteQuestion(values, handleUpdate, token, lang);
             resetForm();
         }
     });

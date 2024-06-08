@@ -8,12 +8,14 @@ import { getBookings, getEvents } from "./handlers"
 import { useContext, useEffect, useState } from "react"
 import { Toaster } from "react-hot-toast";
 import { tokenContext } from "../../contexts/AuthProvidor"
+import { useLang } from "../../hooks/uselang"
 
 
 
 const Dashboard = () => {
 
     const token = useContext(tokenContext);
+    const lang = useLang();
 
     const [bookings, setBooking] = useState([]);
     const [isLoading, SetIsLoading] = useState(false);
@@ -25,9 +27,12 @@ const Dashboard = () => {
     };
 
     useEffect(() => {
-        getBookings(setBooking, SetIsLoading, "", token);
-        getEvents(setEvents, token)
-    }, [token])
+        getBookings(setBooking, SetIsLoading, "", token, lang);
+        getEvents(setEvents, token, lang)
+    }, [token, lang])
+
+
+
 
     return (
         <>

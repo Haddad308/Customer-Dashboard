@@ -6,21 +6,22 @@ import { useContext, useEffect, useState } from "react"
 import { getRoomDetails } from "./detailsPages.handlers"
 import { useLocation } from "react-router-dom";
 import { tokenContext } from "../../contexts/AuthProvidor"
+import { useLang } from "../../hooks/uselang"
 
 const RoomPage = () => {
 
     const [details, setDetails] = useState("");
     const token = useContext(tokenContext);
+    const lang = useLang();
 
     const location = useLocation();
     let { pathname } = location;
 
     const id = parseInt(pathname.slice(pathname.lastIndexOf("/") + 1));
-    console.log(id);
 
     useEffect(() => {
-        getRoomDetails(setDetails, id, token)
-    }, [id, token])
+        getRoomDetails(setDetails, id, token, lang)
+    }, [id, token, lang])
 
 
 

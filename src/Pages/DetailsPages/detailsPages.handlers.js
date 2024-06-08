@@ -2,8 +2,8 @@ import { instance } from "../../Network/axios";
 
 
 
-async function getRoomDetails(setMeetingRoom, id, token) {
-    let data = await instance.get(`/meeting_room?room_id=${id}&token=${token}`, {
+async function getRoomDetails(setMeetingRoom, id, token, lang) {
+    let data = await instance.get(`/meeting_room?room_id=${id}&token=${token}&lang=${lang}`, {
         headers: {
             "Content-Type": "application/json",
             "Accept": "application/json",
@@ -20,9 +20,9 @@ async function getRoomDetails(setMeetingRoom, id, token) {
     }
 }
 
-async function getOfficeDetails(setOfficeRoom, id, token) {
+async function getOfficeDetails(setOfficeRoom, id, token, lang) {
     console.log("hi Test");
-    let data = await instance.get(`/office_room?room_id=${id}&token=${token}`, {
+    let data = await instance.get(`/office_room?room_id=${id}&token=${token}&lang=${lang}`, {
         headers: {
             "Content-Type": "application/json",
             "Accept": "application/json",
@@ -39,9 +39,9 @@ async function getOfficeDetails(setOfficeRoom, id, token) {
     }
 }
 
-async function getNewsDetails(setNews, id, token) {
+async function getNewsDetails(setNews, id, token, lang) {
     console.log("hi Test");
-    let data = await instance.get(`/news?news_id=${id}&token=${token}`, {
+    let data = await instance.get(`/news?news_id=${id}&token=${token}&lang=${lang}`, {
         headers: {
             "Content-Type": "application/json",
             "Accept": "application/json",

@@ -12,6 +12,7 @@ import { useFormik } from "formik";
 import * as Yup from 'yup';
 import toast, { Toaster } from "react-hot-toast";
 import { tokenContext } from "../contexts/AuthProvidor";
+import { useLang } from "../hooks/uselang";
 const notify = () => toast.success('Thanks for contacting us!');
 
 
@@ -19,11 +20,12 @@ const ContactUs = () => {
 
     const [isLoading, setIsLoading] = useState(false);
     const token = useContext(tokenContext);
+    const lang = useLang();
 
-    async function contactUsFun(UserData, token) {
+    async function contactUsFun(UserData, token, lang) {
         setIsLoading(true)
         try {
-            const response = await axios.post(`https://highnox.site/highnox/contact_us?token=${token}`, UserData, {
+            const response = await axios.post(`https://highnox.site/highnox/contact_us?token=${token}&lang=${lang}`, UserData, {
                 headers: {
                     "Content-Type": "application/json",
                     "Accept": "application/json",
@@ -60,7 +62,7 @@ const ContactUs = () => {
                 .required('Phone is required'),
         }),
         onSubmit: (values, { resetForm }) => {
-            contactUsFun(values, token);
+            contactUsFun(values, token, lang);
             resetForm();
         }
     });

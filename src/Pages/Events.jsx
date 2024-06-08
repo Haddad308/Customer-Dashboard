@@ -4,6 +4,7 @@ import Event from "../Components/Dashboard/Event"
 import NavSearch from "../Components/Layout/NavSearch"
 import { getEvents } from "./Dashboard/handlers";
 import { tokenContext } from "../contexts/AuthProvidor";
+import { useLang } from "../hooks/uselang";
 
 const Events = () => {
 
@@ -11,7 +12,7 @@ const Events = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [filtered, setFiltered] = useState([]);
   const token = useContext(tokenContext);
-
+  const lang = useLang();
 
 
   function handleSearch(query) {
@@ -23,8 +24,8 @@ const Events = () => {
   }
 
   useEffect(() => {
-    getEvents(setEvents, token)
-  }, [token])
+    getEvents(setEvents, token, lang);
+  }, [token, lang])
 
   useEffect(() => {
     const filteredEvents = events.filter(event =>

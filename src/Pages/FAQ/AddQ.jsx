@@ -6,12 +6,14 @@ import * as Yup from 'yup';
 import { useContext, useState } from "react";
 import { AddQuestion } from "./FAQ.handlers";
 import { tokenContext } from "../../contexts/AuthProvidor";
+import { useLang } from "../../hooks/uselang";
 
 
 export default function AddQ({ handleDelete }) {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const [isLoading, setIsLoading] = useState(false);
     const token = useContext(tokenContext);
+    const lang = useLang();
 
 
     const formHandler = useFormik({
@@ -26,7 +28,7 @@ export default function AddQ({ handleDelete }) {
                 .required('description is required'),
         }),
         onSubmit: (values, { resetForm }) => {
-            AddQuestion(values, setIsLoading, handleDelete, token);
+            AddQuestion(values, setIsLoading, handleDelete, token, lang);
             resetForm();
         }
     });

@@ -5,10 +5,12 @@ import { getOfficeDetails } from "./detailsPages.handlers"
 import { useLocation } from "react-router-dom";
 import OfficeRooms from "../../Components/Dashboard/OfficeRooms"
 import { tokenContext } from "../../contexts/AuthProvidor";
+import { useLang } from "../../hooks/uselang";
 
 const OfficePage = () => {
 
     const token = useContext(tokenContext);
+    const lang = useLang();
 
     const [details, setDetails] = useState("");
 
@@ -16,11 +18,10 @@ const OfficePage = () => {
     let { pathname } = location;
 
     const id = parseInt(pathname.slice(pathname.lastIndexOf("/") + 1));
-    console.log(id);
 
     useEffect(() => {
-        getOfficeDetails(setDetails, id, token)
-    }, [id, token])
+        getOfficeDetails(setDetails, id, token, lang)
+    }, [id, token, lang])
 
 
     return (

@@ -4,10 +4,10 @@ import { instance } from "../../Network/axios";
 const notify = () => toast.success('User Data Updated successfully');
 
 
-async function editUserInfo(UserInfo, setIsLoading, token) {
+async function editUserInfo(UserInfo, setIsLoading, token, lang) {
     setIsLoading(true);
     try {
-        const response = await instance.put(`/update_my_data?token=${token}`, UserInfo, {
+        const response = await instance.put(`/update_my_data?token=${token}&lang=${lang}`, UserInfo, {
             headers: {
                 "Content-Type": "application/json",
                 "Accept": "application/json",
@@ -25,9 +25,9 @@ async function editUserInfo(UserInfo, setIsLoading, token) {
 }
 
 
-async function getUserData(setUserData, SetIsLoading, token) {
+async function getUserData(setUserData, SetIsLoading, token, lang) {
     SetIsLoading(true)
-    let data = await instance.get(`/get_my_data?token=${token}`, {
+    let data = await instance.get(`/get_my_data?token=${token}&lang=${lang}`, {
         headers: {
             "Content-Type": "application/json",
             "Accept": "application/json",
