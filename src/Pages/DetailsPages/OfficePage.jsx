@@ -1,12 +1,14 @@
 import { Button } from "@nextui-org/react"
 import Features from "../../Components/Dashboard/Features"
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { getOfficeDetails } from "./detailsPages.handlers"
 import { useLocation } from "react-router-dom";
 import OfficeRooms from "../../Components/Dashboard/OfficeRooms"
+import { tokenContext } from "../../contexts/AuthProvidor";
 
 const OfficePage = () => {
 
+    const token = useContext(tokenContext);
 
     const [details, setDetails] = useState("");
 
@@ -17,8 +19,8 @@ const OfficePage = () => {
     console.log(id);
 
     useEffect(() => {
-        getOfficeDetails(setDetails, id)
-    }, [id])
+        getOfficeDetails(setDetails, id, token)
+    }, [id, token])
 
 
     return (

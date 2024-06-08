@@ -1,16 +1,13 @@
-import axios from "axios";
 import toast from "react-hot-toast";
+import { instance } from "../../Network/axios";
 const cancel = () => toast.success('The booking cancelled successfully.');
 const cancelled = () => toast.error('This booking is already cancelled.');
 
-const BASE_URL = "https://highnox.site/highnox";
-const token = localStorage.getItem("userTokenC");
 
-// *Done
-async function getBookings(setBooking, setIsLoading, status = "") {
+async function getBookings(setBooking, setIsLoading, status = "", token) {
     setIsLoading(true);
     try {
-        const response = await axios.get(`${BASE_URL}/booking/?token=${token}${status ? `&status=${status}` : ""}`, {
+        const response = await instance.get(`/booking/?token=${token}${status ? `&status=${status}` : ""}`, {
             headers: {
                 "Content-Type": "application/json",
                 "Accept": "application/json",
@@ -30,8 +27,8 @@ async function getBookings(setBooking, setIsLoading, status = "") {
 }
 
 // *Done
-async function getEvents(setEvents) {
-    let data = await axios.get(`${BASE_URL}/events?token=${token}`, {
+async function getEvents(setEvents, token) {
+    let data = await instance.get(`/events?token=${token}`, {
         headers: {
             "Content-Type": "application/json",
             "Accept": "application/json",
@@ -49,8 +46,8 @@ async function getEvents(setEvents) {
 }
 
 // *Done
-async function getMeetingRooms(setMeetingRooms, limit) {
-    let data = await axios.get(`${BASE_URL}/meeting_room?limit=${limit}&token=${token}`, {
+async function getMeetingRooms(setMeetingRooms, limit, token) {
+    let data = await instance.get(`/meeting_room?limit=${limit}&token=${token}`, {
         headers: {
             "Content-Type": "application/json",
             "Accept": "application/json",
@@ -68,8 +65,8 @@ async function getMeetingRooms(setMeetingRooms, limit) {
 }
 
 // *Done
-async function getOfficeRooms(setOfficeRooms, limit) {
-    let data = await axios.get(`${BASE_URL}/office_room?limit=${limit}&token=${token}`, {
+async function getOfficeRooms(setOfficeRooms, limit, token) {
+    let data = await instance.get(`/office_room?limit=${limit}&token=${token}`, {
         headers: {
             "Content-Type": "application/json",
             "Accept": "application/json",
@@ -87,8 +84,8 @@ async function getOfficeRooms(setOfficeRooms, limit) {
 }
 
 // *Done
-async function getNews(setOfficeRooms, limit) {
-    let data = await axios.get(`${BASE_URL}/news?limit=${limit}&token=${token}`, {
+async function getNews(setOfficeRooms, limit, token) {
+    let data = await instance.get(`/news?limit=${limit}&token=${token}`, {
         headers: {
             "Content-Type": "application/json",
             "Accept": "application/json",
@@ -106,9 +103,9 @@ async function getNews(setOfficeRooms, limit) {
 }
 
 // *Done
-async function deleteBooking(id, callback) {
+async function deleteBooking(id, callback, token) {
     try {
-        await axios.get(`${BASE_URL}/cancel_booking?id=${id}&token=${token}`, {
+        await instance.get(`/cancel_booking?id=${id}&token=${token}`, {
             headers: {
                 "Content-Type": "application/json",
                 "Accept": "application/json",

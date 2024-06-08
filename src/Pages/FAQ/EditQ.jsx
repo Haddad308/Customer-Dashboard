@@ -5,10 +5,13 @@ import * as Yup from 'yup';
 import { Select, SelectItem } from "@nextui-org/react";
 import { EditIcon } from "../../Components/Tables/EditIcon";
 import { UpdateQuestion } from "./FAQ.handlers";
+import { useContext } from "react";
+import { tokenContext } from "../../contexts/AuthProvidor";
 
 
 export default function EditQ({ data, handleUpdate }) {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
+    const token = useContext(tokenContext);
 
     const formHandler = useFormik({
         initialValues: {
@@ -26,15 +29,15 @@ export default function EditQ({ data, handleUpdate }) {
         }),
         onSubmit: (values, { resetForm }) => {
             console.log(values);
-            UpdateQuestion(values, handleUpdate)
+            UpdateQuestion(values, handleUpdate, token);
             resetForm();
         }
     });
 
     return (
         <>
-            
-            <Button onPress={onOpen}  color="primary" className="font-semibold">
+
+            <Button onPress={onOpen} color="primary" className="font-semibold">
                 <EditIcon />
                 <p>Edit</p>
             </Button>

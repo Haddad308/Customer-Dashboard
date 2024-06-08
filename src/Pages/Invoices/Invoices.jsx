@@ -1,19 +1,22 @@
 /* eslint-disable no-unused-vars */
 import { Tabs, Tab, Card, CardBody } from "@nextui-org/react";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { getInvoices } from "./Invoices.handlers";
 import InvoiceTable from "./InvoicesTable";
+import { tokenContext } from "../../contexts/AuthProvidor";
 
 const Invoices = () => {
 
     const [paidInvoices, setPaidInvoices] = useState([]);
     const [notPaidInvoices, setNotPaidInvoices] = useState([]);
     const [isLoading, setIsLoading] = useState(false)
+    const token = useContext(tokenContext);
+
 
     useEffect(() => {
-        getInvoices(setPaidInvoices, setIsLoading, "True")
-        getInvoices(setNotPaidInvoices, setIsLoading, "False")
-    }, [])
+        getInvoices(setPaidInvoices, setIsLoading, "True", token)
+        getInvoices(setNotPaidInvoices, setIsLoading, "False", token)
+    }, [token])
 
 
     return (

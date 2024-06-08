@@ -2,26 +2,26 @@ import { Avatar, Button, Chip } from "@nextui-org/react"
 import { IoPrint } from "react-icons/io5";
 import test from "../assets/a7535bed2bdafa25bf2a255d2a9b9389.jpeg"
 import { useLocation } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import getBooking from "./Bookings/bookings.handler";
 import RentalDetailsTable from "./Bookings/RentalDetailsTable";
+import { tokenContext } from "../contexts/AuthProvidor";
 
 
 const Booking = () => {
 
+    const token = useContext(tokenContext);
+
     const location = useLocation();
     let { pathname } = location;
-
     const id = parseInt(pathname.slice(pathname.lastIndexOf("/") + 1));
-    const [booking,setBooking] = useState([]);
 
-    useEffect(()=>{
-        getBooking(setBooking,id)
-    }, [id])
+    const [booking, setBooking] = useState([]);
 
-    useEffect(()=>{
-console.log(booking);
-    },[booking])
+    useEffect(() => {
+        getBooking(setBooking, id, token)
+    }, [id, token])
+
 
     return (
         <div className='p-5' >
@@ -64,7 +64,7 @@ console.log(booking);
                 </div>
                 <div className="pe-5 py-4" >
                     <h1 className="font-semibold text-2xl text-primary pb-3" >Booking Details</h1>
-                    <RentalDetailsTable rooms={booking?.room_info} foods={booking?.food_info}  />
+                    <RentalDetailsTable rooms={booking?.room_info} foods={booking?.food_info} />
                 </div>
                 <hr />
                 <div className="grid grid-cols-2 gap-16 pt-3 mt-5" >
@@ -113,7 +113,7 @@ console.log(booking);
                 </div>
                 <div className="pe-5 py-4" >
                     <h1 className="font-semibold text-2xl text-primary pb-3" >Extra Options</h1>
-                    
+
                 </div>
 
             </div>

@@ -1,16 +1,18 @@
 
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import NewsCards from "../Cards/NewsCards";
 import SeeMore from "./SeeMore";
 import { getNews } from "../../Pages/Dashboard/handlers";
+import { tokenContext } from "../../contexts/AuthProvidor";
 
 const News = () => {
 
     const [news, setNews] = useState([]);
+    const token = useContext(tokenContext);
 
     useEffect(() => {
-        getNews(setNews,4);
-    }, [])
+        getNews(setNews, 4, token);
+    }, [token])
 
     return (
         <div>

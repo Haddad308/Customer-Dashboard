@@ -7,19 +7,20 @@ import { IoLocationSharp } from "react-icons/io5";
 import { FaTelegramPlane } from "react-icons/fa";
 import { FaEarthAmericas } from "react-icons/fa6";
 import axios from "axios";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from 'yup';
 import toast, { Toaster } from "react-hot-toast";
+import { tokenContext } from "../contexts/AuthProvidor";
 const notify = () => toast.success('Thanks for contacting us!');
 
 
 const ContactUs = () => {
 
     const [isLoading, setIsLoading] = useState(false);
-    const token = localStorage.getItem("userTokenC");
+    const token = useContext(tokenContext);
 
-    async function contactUsFun(UserData) {
+    async function contactUsFun(UserData, token) {
         setIsLoading(true)
         try {
             const response = await axios.post(`https://highnox.site/highnox/contact_us?token=${token}`, UserData, {
@@ -59,7 +60,7 @@ const ContactUs = () => {
                 .required('Phone is required'),
         }),
         onSubmit: (values, { resetForm }) => {
-            contactUsFun(values);
+            contactUsFun(values, token);
             resetForm();
         }
     });

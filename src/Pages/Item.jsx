@@ -11,14 +11,14 @@ const Item = () => {
                 <div className="p-4 flex flex-col justify-around" >
                     <h1 className="text-2xl font-bold" >Discount 10%</h1>
                     <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Itaque, voluptas sed dignissimos praesentium, veritatis magni veniam saepe sit ducimus amet iure labore, doloremque sint fuga repellendus dicta excepturi quod accusantium mollitia ullam molestiae dolor rem. Ducimus corporis autem accusamus reiciendis.</p>
-                    <Features/>
+                    <Features />
                     <Button variant="solid" className="bg-[#248ed0] text-white font-bold" >
                         Action
                     </Button>
                 </div>
             </div>
 
-            <MeetingRooms/>
+            <MeetingRooms />
         </div>
     )
 }

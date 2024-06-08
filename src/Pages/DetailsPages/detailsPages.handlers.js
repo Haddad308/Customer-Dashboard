@@ -1,11 +1,9 @@
-import axios from "axios";
-
-const BASE_URL = "https://highnox.site/highnox";
-const token = localStorage.getItem("userTokenC");
+import { instance } from "../../Network/axios";
 
 
-async function getRoomDetails(setMeetingRoom, id) {
-    let data = await axios.get(`${BASE_URL}/meeting_room?room_id=${id}&token=${token}`, {
+
+async function getRoomDetails(setMeetingRoom, id, token) {
+    let data = await instance.get(`/meeting_room?room_id=${id}&token=${token}`, {
         headers: {
             "Content-Type": "application/json",
             "Accept": "application/json",
@@ -22,9 +20,9 @@ async function getRoomDetails(setMeetingRoom, id) {
     }
 }
 
-async function getOfficeDetails(setOfficeRoom, id) {
+async function getOfficeDetails(setOfficeRoom, id, token) {
     console.log("hi Test");
-    let data = await axios.get(`${BASE_URL}/office_room?room_id=${id}&token=${token}`, {
+    let data = await instance.get(`/office_room?room_id=${id}&token=${token}`, {
         headers: {
             "Content-Type": "application/json",
             "Accept": "application/json",
@@ -41,9 +39,9 @@ async function getOfficeDetails(setOfficeRoom, id) {
     }
 }
 
-async function getNewsDetails(setNews, id) {
+async function getNewsDetails(setNews, id, token) {
     console.log("hi Test");
-    let data = await axios.get(`${BASE_URL}/news?news_id=${id}&token=${token}`, {
+    let data = await instance.get(`/news?news_id=${id}&token=${token}`, {
         headers: {
             "Content-Type": "application/json",
             "Accept": "application/json",

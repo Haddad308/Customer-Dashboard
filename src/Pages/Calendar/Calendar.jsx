@@ -1,17 +1,19 @@
 import "@bitnoi.se/react-scheduler/dist/style.css";
 import { Scheduler } from "@bitnoi.se/react-scheduler";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { getCalenderData } from "./Calendar.handlers";
 import { useNavigate } from "react-router-dom";
+import { tokenContext } from "../../contexts/AuthProvidor";
 
 const CAlendar = () => {
 
     const [calendar, setCalendar] = useState([]);
     const [isLoading, setIsLoading] = useState([]);
+    const token = useContext(tokenContext);
 
     useEffect(() => {
-        getCalenderData(setCalendar, setIsLoading)
-    }, [])
+        getCalenderData(setCalendar, setIsLoading, token)
+    }, [token])
 
     const navigate = useNavigate()
 

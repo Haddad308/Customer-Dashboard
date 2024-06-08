@@ -1,11 +1,8 @@
-import axios from "axios";
+import { instance } from "../../Network/axios";
 
-const BASE_URL = "https://highnox.site/highnox";
-const token = localStorage.getItem("userTokenC");
-
-async function getCalenderData(setCalendar, SetIsLoading) {
+async function getCalenderData(setCalendar, SetIsLoading, token) {
     SetIsLoading(true)
-    let data = await axios.get(`${BASE_URL}/booking_calendar?token=${token}`, {
+    let data = await instance.get(`/booking_calendar?token=${token}`, {
         headers: {
             "Content-Type": "application/json",
             "Accept": "application/json",

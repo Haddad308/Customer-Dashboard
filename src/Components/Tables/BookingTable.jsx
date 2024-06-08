@@ -1,10 +1,11 @@
 /* eslint-disable react/prop-types */
 import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Chip, Tooltip, Pagination, Skeleton } from "@nextui-org/react";
-    import { EyeIcon } from "./EveIcon"; // Fixed import typo
-import { useMemo, useState } from "react";
+import { EyeIcon } from "./EveIcon"; // Fixed import typo
+import { useContext, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { DeleteButton } from "../deleteButton";
 import { deleteBooking } from "../../Pages/Dashboard/handlers";
+import { tokenContext } from "../../contexts/AuthProvidor";
 
 
 
@@ -23,6 +24,8 @@ const columns = [
 
 
 export default function BookingTable({ data, isLoading, handleDelete }) {
+
+    const token = useContext(tokenContext);
 
     const [page, setPage] = useState(1);
     const rowsPerPage = 4;
@@ -51,7 +54,7 @@ export default function BookingTable({ data, isLoading, handleDelete }) {
                     />
                 </div>
             }
-            
+
         >
             <TableHeader columns={columns}>
                 {(column) => (
@@ -62,56 +65,56 @@ export default function BookingTable({ data, isLoading, handleDelete }) {
             </TableHeader>
             <TableBody items={items}>
                 {!isLoading ? (item) => (
-                <TableRow key={item.id}>
-                    <TableCell>
-                        {item.name}
-                    </TableCell>
-                    <TableCell>
-                        {item.customer}
-                    </TableCell>
-                    <TableCell>
-                        {item.city}
-                    </TableCell>
-                    <TableCell>
-                        {item.building}
-                    </TableCell>
-                    <TableCell>
-                        {item.room_info[0]?.floor}
-                    </TableCell>
-                    <TableCell>
-                        {item.room_info[0]?.room}
-                    </TableCell>
+                    <TableRow key={item.id}>
+                        <TableCell>
+                            {item.name}
+                        </TableCell>
+                        <TableCell>
+                            {item.customer}
+                        </TableCell>
+                        <TableCell>
+                            {item.city}
+                        </TableCell>
+                        <TableCell>
+                            {item.building}
+                        </TableCell>
+                        <TableCell>
+                            {item.room_info[0]?.floor}
+                        </TableCell>
+                        <TableCell>
+                            {item.room_info[0]?.room}
+                        </TableCell>
 
-                    <TableCell>
-                        {item.room_info[0]?.membership}
-                    </TableCell>
-                    <TableCell>
-                        {item.room_info[0]?.room_price}
-                    </TableCell>
-                    <TableCell>
+                        <TableCell>
+                            {item.room_info[0]?.membership}
+                        </TableCell>
+                        <TableCell>
+                            {item.room_info[0]?.room_price}
+                        </TableCell>
+                        <TableCell>
                             <Chip className="capitalize" color={item.status === "cancel" ? "danger" : "success"} size="sm" variant="flat">
-                            {item.status}
-                        </Chip>
-                    </TableCell>
-                    <TableCell>
-                        <div className="relative flex items-center gap-2">
-                            <Tooltip content="Details">
-                                <Link to={`/booking/${item.id}`} >
-                                    <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
-                                        <EyeIcon />
-                                    </span>
-                                </Link>
-                            </Tooltip>
-                            <Tooltip color="danger" content="Delete user">
-                                    <DeleteButton onDelete={()=>{
-                                        deleteBooking(item.id, handleDelete)
-                                        
-                                    }} />
-                            </Tooltip>
-                        </div>
-                    </TableCell>
+                                {item.status}
+                            </Chip>
+                        </TableCell>
+                        <TableCell>
+                            <div className="relative flex items-center gap-2">
+                                <Tooltip content="Details">
+                                    <Link to={`/booking/${item.id}`} >
+                                        <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
+                                            <EyeIcon />
+                                        </span>
+                                    </Link>
+                                </Tooltip>
+                                <Tooltip color="danger" content="Delete user">
+                                    <DeleteButton onDelete={() => {
+                                        deleteBooking(item.id, handleDelete, token)
 
-                </TableRow>
+                                    }} />
+                                </Tooltip>
+                            </div>
+                        </TableCell>
+
+                    </TableRow>
                 ) : [...Array(5)].map((_, index) => (
                     <TableRow key={index}>
                         <TableCell>
@@ -145,7 +148,7 @@ export default function BookingTable({ data, isLoading, handleDelete }) {
                             <Skeleton className="h-3 w-3/5 rounded-lg" />
                         </TableCell>
                     </TableRow>
-                )) }
+                ))}
             </TableBody>
         </Table>
     );

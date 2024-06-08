@@ -1,12 +1,13 @@
 import { Button } from "@nextui-org/react"
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { getNewsDetails } from "./detailsPages.handlers"
 import { useLocation } from "react-router-dom";
 import News from "../../Components/Dashboard/News"
+import { tokenContext } from "../../contexts/AuthProvidor";
 
 const NewsPage = () => {
 
-
+    const token = useContext(tokenContext);
     const [details, setDetails] = useState("");
 
     const location = useLocation();
@@ -16,10 +17,10 @@ const NewsPage = () => {
     console.log(id);
 
     useEffect(() => {
-        getNewsDetails(setDetails, id)
-    }, [id])
+        getNewsDetails(setDetails, id, token)
+    }, [id, token])
 
-console.log(details);
+    console.log(details);
 
     return (
         <div className="p-5">

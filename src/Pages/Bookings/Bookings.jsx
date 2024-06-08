@@ -3,31 +3,33 @@ import { IoFileTrayStackedSharp } from "react-icons/io5";
 import { FaTableList } from "react-icons/fa6";
 import { FaCalendar } from "react-icons/fa6";
 import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Views from "./Views";
 import { getBookings } from "../Dashboard/handlers";
 import { Toaster } from "react-hot-toast";
+import { tokenContext } from "../../contexts/AuthProvidor";
 
 
 const Bookings = () => {
 
     const [selectedView, setSelectedView] = useState("normal");
     const [isLoading, SetIsLoading] = useState(false);
+    const token = useContext(tokenContext);
 
     const [active, setActive] = useState([])
     const [past, setPast] = useState([])
     const [cancelled, setCancelled] = useState([])
 
     useEffect(() => {
-        getBookings(setActive, SetIsLoading, "canceled");
-        getBookings(setPast, SetIsLoading, "pending");
-        getBookings(setCancelled, SetIsLoading);
-    }, [selectedView])
+        getBookings(setActive, SetIsLoading, "canceled", token);
+        getBookings(setPast, SetIsLoading, "pending", token);
+        getBookings(setCancelled, SetIsLoading, "", token);
+    }, [selectedView, token])
 
     const handleDelete = () => {
-        getBookings(setActive, SetIsLoading, "canceled");
-        getBookings(setPast, SetIsLoading, "pending");
-        getBookings(setCancelled, SetIsLoading);
+        getBookings(setActive, SetIsLoading, "canceled", token);
+        getBookings(setPast, SetIsLoading, "pending", token);
+        getBookings(setCancelled, SetIsLoading, "", token);
     };
 
     return (

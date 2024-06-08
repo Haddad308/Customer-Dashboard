@@ -11,9 +11,3 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     </AuthProvider>
   </React.StrictMode>,
 )
-
-// TODO
-// !2- User Info Page
-// ?3- My Booking Page
-// *4- Booking Page
-// *5- Add Loaders 

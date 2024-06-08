@@ -1,13 +1,16 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import OfficesCards from "../Components/Cards/OfficesCards"
 import NavSearch from "../Components/Layout/NavSearch";
 import { getOfficeRooms } from "./Dashboard/handlers";
+import { tokenContext } from "../contexts/AuthProvidor";
 const AvailableOffices = () => {
 
 
   const [officeRooms, setOfficeRooms] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [filtered, setFiltered] = useState([]);
+  const token = useContext(tokenContext);
+
 
   function handleSearch(query) {
     setSearchQuery(query);
@@ -19,9 +22,8 @@ const AvailableOffices = () => {
 
 
   useEffect(() => {
-    console.log("hello egypt");
-    getOfficeRooms(setOfficeRooms,2000);
-  }, [])
+    getOfficeRooms(setOfficeRooms, 2000, token);
+  }, [token])
 
 
   useEffect(() => {

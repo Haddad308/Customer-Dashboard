@@ -1,15 +1,9 @@
+import { instance } from "../../Network/axios";
 
 
-import axios from "axios";
-const token = localStorage.getItem("userTokenC");
-
-
-const BASE_URL = "https://highnox.site/highnox";
-
-
-async function getInvoices(setInvoicesData, SetIsLoading,paid) {
+async function getInvoices(setInvoicesData, SetIsLoading, paid, token) {
     SetIsLoading(true)
-    let data = await axios.get(`${BASE_URL}/invoices/?paid=${paid}&token=${token}`, {
+    let data = await instance.get(`/invoices/?paid=${paid}&token=${token}`, {
         headers: {
             "Content-Type": "application/json",
             "Accept": "application/json",

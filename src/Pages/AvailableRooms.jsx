@@ -1,13 +1,15 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import RoomsCards from "../Components/Cards/RoomsCards"
 import NavSearch from "../Components/Layout/NavSearch";
-import {getMeetingRooms} from "../Pages/Dashboard/handlers"
+import { getMeetingRooms } from "../Pages/Dashboard/handlers"
+import { tokenContext } from "../contexts/AuthProvidor";
 
 const AvailableRooms = () => {
 
     const [meetingRooms, setMeetingRooms] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
     const [filtered, setFiltered] = useState([]);
+    const token = useContext(tokenContext);
 
     function handleSearch(query) {
         setSearchQuery(query);
@@ -17,10 +19,9 @@ const AvailableRooms = () => {
         setFiltered(filteredTemplates);
     }
 
-
     useEffect(() => {
-        getMeetingRooms(setMeetingRooms,2000);
-    }, [])
+        getMeetingRooms(setMeetingRooms, 2000, token);
+    }, [token])
 
 
     useEffect(() => {

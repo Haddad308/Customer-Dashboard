@@ -1,18 +1,13 @@
-
-
-import axios from "axios";
 import toast from "react-hot-toast";
-const token = localStorage.getItem("userTokenC");
-
+import { instance } from "../../Network/axios";
 
 const notify = () => toast.success('User Data Updated successfully');
-const BASE_URL = "https://highnox.site/highnox";
 
 
-async function editUserInfo(UserInfo, setIsLoading) {
+async function editUserInfo(UserInfo, setIsLoading, token) {
     setIsLoading(true);
     try {
-        const response = await axios.put(`${BASE_URL}/user?token=${token}`, UserInfo, {
+        const response = await instance.put(`/update_my_data?token=${token}`, UserInfo, {
             headers: {
                 "Content-Type": "application/json",
                 "Accept": "application/json",
@@ -30,9 +25,9 @@ async function editUserInfo(UserInfo, setIsLoading) {
 }
 
 
-async function getUserData(setUserData, SetIsLoading) {
+async function getUserData(setUserData, SetIsLoading, token) {
     SetIsLoading(true)
-    let data = await axios.get(`${BASE_URL}/user?token=${token}`, {
+    let data = await instance.get(`/get_my_data?token=${token}`, {
         headers: {
             "Content-Type": "application/json",
             "Accept": "application/json",
@@ -46,15 +41,13 @@ async function getUserData(setUserData, SetIsLoading) {
     });
 
     if (data?.status === 200) {
-        console.log(data.data);
-        setUserData(data.data);
+        setUserData(data.data.data);
         SetIsLoading(false)
     }
 }
 
 
-function
-    createFormData(data, file) {
+function createFormData(data, file) {
     const formData = new FormData();
 
     // Append data object to FormData

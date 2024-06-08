@@ -3,13 +3,16 @@ import { Modal, Input, ModalContent, ModalHeader, ModalBody, ModalFooter, Button
 import { FaPlus } from "react-icons/fa6";
 import { useFormik } from "formik";
 import * as Yup from 'yup';
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { AddQuestion } from "./FAQ.handlers";
+import { tokenContext } from "../../contexts/AuthProvidor";
 
 
 export default function AddQ({ handleDelete }) {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const [isLoading, setIsLoading] = useState(false);
+    const token = useContext(tokenContext);
+
 
     const formHandler = useFormik({
         initialValues: {
@@ -23,7 +26,7 @@ export default function AddQ({ handleDelete }) {
                 .required('description is required'),
         }),
         onSubmit: (values, { resetForm }) => {
-            AddQuestion(values, setIsLoading, handleDelete)
+            AddQuestion(values, setIsLoading, handleDelete, token);
             resetForm();
         }
     });
@@ -74,7 +77,7 @@ export default function AddQ({ handleDelete }) {
                                     <Button color="danger" variant="light" onPress={onClose}>
                                         Close
                                     </Button>
-                                    <Button color="primary" type="submit" isLoading={isLoading} onPress={()=>{
+                                    <Button color="primary" type="submit" isLoading={isLoading} onPress={() => {
                                         if (!Object.keys(formHandler.errors).length)
                                             onClose();
                                     }}>

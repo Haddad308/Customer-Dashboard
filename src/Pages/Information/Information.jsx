@@ -1,16 +1,18 @@
 /* eslint-disable no-unused-vars */
 import { Avatar, Button, Input } from "@nextui-org/react"
 import { useFormik } from "formik";
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import toast from "react-hot-toast";
 import * as Yup from 'yup';
 import { createFormData, editUserInfo, getUserData } from "./Information.handlers";
+import { tokenContext } from "../../contexts/AuthProvidor";
 
 
 const Information = () => {
 
   const [isLoading, setIsLoading] = useState(false)
   const [userInfo, setUserInfo] = useState([])
+  const token = useContext(tokenContext);
 
 
   // For Editing the user data.
@@ -26,7 +28,7 @@ const Information = () => {
       job: userInfo.job,
       lang: userInfo.lang,
       mobile: userInfo.mobile,
-      name: userInfo.name,
+      name: userInfo.username,
       phone: userInfo.phone,
       related_partner: userInfo.related_partner,
       message: userInfo.message,
@@ -50,7 +52,7 @@ const Information = () => {
     }),
     onSubmit: (values) => {
       console.log("hii");
-      editUserInfo(createFormData(values, userImage?.[0]),setUserInfo)
+      editUserInfo(createFormData(values, userImage?.[0]), setUserInfo)
     }
   });
 
@@ -61,12 +63,12 @@ const Information = () => {
   }
 
   useEffect(() => {
-    getUserData(setUserInfo, setIsLoading)
-  }, [])
+    getUserData(setUserInfo, setIsLoading, token)
+  }, [token])
 
   useEffect(() => {
-    console.log(userImage);
-  }, [userImage])
+    console.log(userInfo);
+  }, [userInfo])
 
   return (
     <form className="p-5" onSubmit={formHandler.handleSubmit}>
@@ -74,7 +76,7 @@ const Information = () => {
         <h1 className="text-3xl font-semibold pb-3" >Account</h1>
         <div className="flex items-center gap-3 pb-3" >
           <Avatar
-            src={ !userImage? `http://highnox.site/${userInfo.image}` : userImage}
+            src={!userImage ? `https://highnox.site/${userInfo.avatar}` : userImage}
             className="w-24 h-24  text-large" />
           <input type="file" multiple={false} onChange={handleChange} />
         </div>

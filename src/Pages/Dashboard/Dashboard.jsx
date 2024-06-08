@@ -5,12 +5,15 @@ import OfficeRooms from "../../Components/Dashboard/OfficeRooms"
 import News from "../../Components/Dashboard/News"
 import BookingTable from "../../Components/Tables/BookingTable"
 import { getBookings, getEvents } from "./handlers"
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { Toaster } from "react-hot-toast";
+import { tokenContext } from "../../contexts/AuthProvidor"
 
 
 
 const Dashboard = () => {
+
+    const token = useContext(tokenContext);
 
     const [bookings, setBooking] = useState([]);
     const [isLoading, SetIsLoading] = useState(false);
@@ -18,13 +21,13 @@ const Dashboard = () => {
     const [events, setEvents] = useState([]);
 
     const handleDelete = () => {
-        getBookings(setBooking, SetIsLoading);
+        getBookings(setBooking, SetIsLoading, "", token);
     };
 
     useEffect(() => {
-        getBookings(setBooking, SetIsLoading);
-        getEvents(setEvents,)
-    }, [])
+        getBookings(setBooking, SetIsLoading, "", token);
+        getEvents(setEvents, token)
+    }, [token])
 
     return (
         <>

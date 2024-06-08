@@ -1,24 +1,26 @@
 import { Accordion, AccordionItem } from "@nextui-org/react";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { getFAQ } from "./FAQ.handlers";
 import AddQ from "./AddQ";
 import { Toaster } from "react-hot-toast";
 import DeleteQ from "./DeleteQ";
 import EditQ from "./EditQ";
+import { tokenContext } from "../../contexts/AuthProvidor";
 
 const FaQ = () => {
 
     const [FAQ, setFAQ] = useState([]);
     const [, setIsLoading] = useState(false);
+    const token = useContext(tokenContext);
 
 
     const handleUpdate = () => {
-        getFAQ(setFAQ, setIsLoading)
+        getFAQ(setFAQ, setIsLoading, token)
     };
 
     useEffect(() => {
-        getFAQ(setFAQ, setIsLoading)
-    }, [])
+        getFAQ(setFAQ, setIsLoading, token)
+    }, [token])
 
     return (
         <>
@@ -39,7 +41,7 @@ const FaQ = () => {
                     })}
                 </Accordion>
             </div>
-        
+
         </>
     )
 }

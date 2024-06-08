@@ -2,13 +2,15 @@
 import { Button } from "@nextui-org/react"
 import Features from "../../Components/Dashboard/Features"
 import MeetingRooms from "../../Components/Dashboard/MeetingRooms"
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { getRoomDetails } from "./detailsPages.handlers"
 import { useLocation } from "react-router-dom";
+import { tokenContext } from "../../contexts/AuthProvidor"
 
 const RoomPage = () => {
 
     const [details, setDetails] = useState("");
+    const token = useContext(tokenContext);
 
     const location = useLocation();
     let { pathname } = location;
@@ -17,8 +19,8 @@ const RoomPage = () => {
     console.log(id);
 
     useEffect(() => {
-        getRoomDetails(setDetails, id)
-    }, [id])
+        getRoomDetails(setDetails, id, token)
+    }, [id, token])
 
 
 

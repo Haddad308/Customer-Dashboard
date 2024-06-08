@@ -1,11 +1,8 @@
-
-import axios from "axios";
-const BASE_URL = "https://highnox.site/highnox";
-const token = localStorage.getItem("userTokenC");
+import { instance } from "../../Network/axios";
 
 
-export default async function getBooking(setBooking, booking_id = "") {
-    let data = await axios.get(`${BASE_URL}/booking/?token=${token}${booking_id ? `&booking_id=${booking_id}` : ""}`, {
+export default async function getBooking(setBooking, booking_id = "", token) {
+    let data = await instance.get(`/booking/?token=${token}${booking_id ? `&booking_id=${booking_id}` : ""}`, {
         headers: {
             "Content-Type": "application/json",
             "Accept": "application/json",

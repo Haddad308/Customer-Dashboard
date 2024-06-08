@@ -1,13 +1,15 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import NewsCards from "../Components/Cards/NewsCards"
 import NavSearch from "../Components/Layout/NavSearch";
 import { getNews } from "./Dashboard/handlers";
+import { tokenContext } from "../contexts/AuthProvidor";
 
 const News = () => {
 
     const [news, setNews] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
     const [filtered, setFiltered] = useState([]);
+    const token = useContext(tokenContext);
 
     function handleSearch(query) {
         setSearchQuery(query);
@@ -18,9 +20,8 @@ const News = () => {
     }
 
     useEffect(() => {
-        console.log("hello egypt");
-        getNews(setNews,2000);
-    }, [])
+        getNews(setNews, 2000, token);
+    }, [token])
 
     useEffect(() => {
         const filteredEvents = news.filter(room =>

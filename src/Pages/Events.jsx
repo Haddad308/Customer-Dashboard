@@ -1,14 +1,18 @@
 
-import { useEffect, useState } from "react";
-import Event from "../Components/Dashboard/Event" 
+import { useContext, useEffect, useState } from "react";
+import Event from "../Components/Dashboard/Event"
 import NavSearch from "../Components/Layout/NavSearch"
 import { getEvents } from "./Dashboard/handlers";
+import { tokenContext } from "../contexts/AuthProvidor";
 
 const Events = () => {
 
   const [events, setEvents] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [filtered, setFiltered] = useState([]);
+  const token = useContext(tokenContext);
+
+
 
   function handleSearch(query) {
     setSearchQuery(query);
@@ -19,8 +23,8 @@ const Events = () => {
   }
 
   useEffect(() => {
-    getEvents(setEvents)
-  }, [])
+    getEvents(setEvents, token)
+  }, [token])
 
   useEffect(() => {
     const filteredEvents = events.filter(event =>

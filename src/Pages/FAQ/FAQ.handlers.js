@@ -1,28 +1,26 @@
-import axios from "axios";
 import toast from "react-hot-toast";
+import { instance } from "../../Network/axios";
 const added = () => toast.success('New Question added successfully');
 const deleted = () => toast.success('Question deleted successfully');
 const updates = () => toast.success('Question updated successfully');
 
 
-const BASE_URL = "https://highnox.site/highnox";
-const token = localStorage.getItem("userTokenC");
 
-
-async function getFAQ(setFAQ, SetIsLoading) {
+async function getFAQ(setFAQ, SetIsLoading, token) {
     SetIsLoading(true)
-    let data = await axios.get(`${BASE_URL}/fandq/read?token=${token}`, {
-        headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json",
-        },
-        data: JSON.stringify({}),
-        withCredentials: false
-    }
-    ).catch((error) => {
-        console.error("test 312", error);
-        SetIsLoading(false)
-    });
+    let data = await instance
+        .get(`/fandq/read?token=${token}`, {
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+            },
+            data: JSON.stringify({}),
+            withCredentials: false
+        }
+        ).catch((error) => {
+            console.error("test 312", error);
+            SetIsLoading(false)
+        });
 
     if (data?.status === 200) {
         setFAQ(data.data.data);
@@ -30,20 +28,21 @@ async function getFAQ(setFAQ, SetIsLoading) {
     }
 }
 
-async function AddQuestion(values, SetIsLoading, callback) {
+async function AddQuestion(values, SetIsLoading, callback, token) {
     SetIsLoading(true)
-    let data = await axios.post(`${BASE_URL}/fandq/create?token=${token}`, values, {
-        headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json",
-        },
-        data: JSON.stringify({}),
-        withCredentials: false
-    }
-    ).catch((error) => {
-        console.error("test 312", error);
-        SetIsLoading(false)
-    });
+    let data = await instance
+        .post(`/fandq/create?token=${token}`, values, {
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+            },
+            data: JSON.stringify({}),
+            withCredentials: false
+        }
+        ).catch((error) => {
+            console.error("test 312", error);
+            SetIsLoading(false)
+        });
 
     if (data?.status === 200) {
         added();
@@ -52,19 +51,20 @@ async function AddQuestion(values, SetIsLoading, callback) {
     }
 }
 
-async function DeleteQuestion({ id }, callback) {
+async function DeleteQuestion({ id }, callback, token) {
     console.log("my ID", id);
 
     try {
-        let response = await axios.request({
-            method: 'delete',
-            url: `${BASE_URL}/fandq/delete?token=${token}&f_and_q_id=${id}`,
-            headers: {
-                "Content-Type": "application/json",
-                "Accept": "application/json",
-            },
-            withCredentials: false
-        });
+        let response = await instance
+            .request({
+                method: 'delete',
+                url: `/fandq/delete?token=${token}&f_and_q_id=${id}`,
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json",
+                },
+                withCredentials: false
+            });
 
         if (response?.status === 200) {
             deleted();
@@ -76,18 +76,19 @@ async function DeleteQuestion({ id }, callback) {
 }
 
 
-async function UpdateQuestion(values, callback) {
+async function UpdateQuestion(values, callback, token) {
 
-    let data = await axios.put(`${BASE_URL}/fandq/update?token=${token}&f_and_q_id=${values.id}`, values, {
-        headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json",
-        },
-        withCredentials: false
-    }
-    ).catch((error) => {
-        console.error(error);
-    });
+    let data = await instance
+        .put(`/fandq/update?token=${token}&f_and_q_id=${values.id}`, values, {
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+            },
+            withCredentials: false
+        }
+        ).catch((error) => {
+            console.error(error);
+        });
 
     if (data?.status === 200) {
         updates();
