@@ -53,33 +53,36 @@ async function AddQuestion(values, SetIsLoading, callback) {
 }
 
 async function DeleteQuestion({ id }, callback) {
-    console.log("my ID",id);
-    let data = await axios.delete(`${BASE_URL}/fandq/delete?f_and_q_id=${id}&token=${token}`, {
-        headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json",
-        },
-        // data: JSON.stringify({}),
-        withCredentials: false
-    }
-    ).catch((error) => {
-        console.error(error);
-    });
+    console.log("my ID", id);
 
-    if (data?.status === 200) {
-        deleted();
-        callback()
+    try {
+        let response = await axios.request({
+            method: 'delete',
+            url: `${BASE_URL}/fandq/delete?token=${token}&f_and_q_id=${id}`,
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+            },
+            withCredentials: false
+        });
+
+        if (response?.status === 200) {
+            deleted();
+            callback();
+        }
+    } catch (error) {
+        console.error(error);
     }
 }
 
+
 async function UpdateQuestion(values, callback) {
-    
-    let data = await axios.put(`${BASE_URL}/fandq/update?f_and_q_id=${values.id}&token=${token}`, values, {
+
+    let data = await axios.put(`${BASE_URL}/fandq/update?token=${token}&f_and_q_id=${values.id}`, values, {
         headers: {
             "Content-Type": "application/json",
             "Accept": "application/json",
         },
-        // data: JSON.stringify({}),
         withCredentials: false
     }
     ).catch((error) => {
