@@ -18,3 +18,4 @@ export default async function getBooking(setBooking, booking_id = "", token, lan
         setBooking(data.data.data);
     }
 }
+

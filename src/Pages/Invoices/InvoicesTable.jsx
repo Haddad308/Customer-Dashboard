@@ -1,14 +1,14 @@
 /* eslint-disable react/prop-types */
-import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Chip, Pagination, Skeleton } from "@nextui-org/react";
+import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Chip, Pagination, Skeleton, Tooltip } from "@nextui-org/react";
 import { useMemo, useState } from "react";
+import { Link } from "react-router-dom";
+import { EyeIcon } from "../../Components/Tables/EveIcon";
 
 const columns = [
-    { name: "NAME", uid: "name" },
-    { name: "Customer", uid: "customer" },
     { name: "invoice_date", uid: "invoice_date" },
-    { name: "journal", uid: "journal" },
     { name: "status", uid: "status" },
     { name: "total_amount", uid: "total_amount" }, // Added Actions column
+    { name: "view", uid: "view" },
 ];
 
 
@@ -57,26 +57,29 @@ export default function InvoiceTable({ data, isLoading }) {
             <TableBody items={items}>
                 {!isLoading ? (item) => (
                     <TableRow key={item.id}>
-                        <TableCell>
-                            {item.name}
-                        </TableCell>
-                        <TableCell>
-                            {item.customer}
-                        </TableCell>
+
                         <TableCell>
                             {item.invoice_date}
                         </TableCell>
-                        <TableCell>
-                            {item.journal}
-                        </TableCell>
+
                         <TableCell>
                             <Chip className="capitalize" color={item.status === "draft" ? "danger" : "success"} size="sm" variant="flat">
                                 {item.status}
                             </Chip>
                         </TableCell>
                         <TableCell>
-                            {item.total_amount}
+                            {item.amount_due}
                         </TableCell>
+                        <TableCell>
+                            <Tooltip content="Details">
+                                <Link to={`https://highnox.site/${item.url}`} >
+                                    <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
+                                        <EyeIcon />
+                                    </span>
+                                </Link>
+                            </Tooltip>
+                        </TableCell>
+
 
                     </TableRow>
                 ) : [...Array(5)].map((_, index) => (
@@ -93,12 +96,7 @@ export default function InvoiceTable({ data, isLoading }) {
                         <TableCell>
                             <Skeleton className="h-3 w-3/5 rounded-lg" />
                         </TableCell>
-                        <TableCell>
-                            <Skeleton className="h-3 w-3/5 rounded-lg" />
-                        </TableCell>
-                        <TableCell>
-                            <Skeleton className="h-3 w-3/5 rounded-lg" />
-                        </TableCell>
+
 
                     </TableRow>
                 ))}

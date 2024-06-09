@@ -92,9 +92,9 @@ export default function BookingTable({ data, isLoading, handleDelete }) {
                             {item.room_info[0]?.room_price}
                         </TableCell>
                         <TableCell>
-                            <Chip className="capitalize" color={item.status === "cancel" ? "danger" : "success"} size="sm" variant="flat">
-                                {item.status}
-                            </Chip>
+                            {item?.status === "cancel" && <Chip color="danger" variant="flat">Cancelled</Chip>}
+                            {item?.status === "draft" && <Chip color="warning" variant="flat">Draft</Chip>}
+                            {item?.status === "sale" && <Chip color="success" variant="flat">Confirmed</Chip>}
                         </TableCell>
                         <TableCell>
                             <div className="relative flex items-center gap-2">
@@ -108,7 +108,6 @@ export default function BookingTable({ data, isLoading, handleDelete }) {
                                 <Tooltip color="danger" content="Delete user">
                                     <DeleteButton onDelete={() => {
                                         deleteBooking(item.id, handleDelete, token)
-
                                     }} />
                                 </Tooltip>
                             </div>

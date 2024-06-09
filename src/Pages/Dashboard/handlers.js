@@ -26,6 +26,28 @@ async function getBookings(setBooking, setIsLoading, status = "", token, lang) {
     }
 }
 
+async function getProducts(setProducts, setIsLoading, token, lang) {
+    setIsLoading(true);
+    try {
+        const response = await instance.get(`/other_services?token=${token}&lang=${lang}`, {
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+            },
+            data: JSON.stringify({}),
+            withCredentials: false
+        });
+
+        if (response.status === 200) {
+            setProducts(response.data.data);
+            setIsLoading(false);
+        }
+    } catch (error) {
+        console.error("Error:", error);
+        setIsLoading(false);
+    }
+}
+
 // *Done
 async function getEvents(setEvents, token, lang) {
     let data = await instance.get(`/events?token=${token}&lang=${lang}`, {
@@ -120,11 +142,31 @@ async function deleteBooking(id, callback, token, lang) {
     }
 }
 
+// *Done
+async function confirmBooking(id, callback, token, lang) {
+    try {
+        await instance.get(`/confirm_booking?id=${id}&token=${token}&lang=${lang}`, {
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+            },
+            withCredentials: false
+        });
+        callback();
+        cancel();
+    } catch (error) {
+        cancelled();
+        console.error("This is our Error", error);
+    }
+}
+
 export {
     getBookings,
     deleteBooking,
     getEvents,
     getMeetingRooms,
     getOfficeRooms,
-    getNews
+    getNews,
+    confirmBooking,
+    getProducts
 }

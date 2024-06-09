@@ -1,12 +1,16 @@
-import { Avatar, Button, Chip } from "@nextui-org/react"
-import { IoPrint } from "react-icons/io5";
-import test from "../assets/a7535bed2bdafa25bf2a255d2a9b9389.jpeg"
+import { Avatar, Chip } from "@nextui-org/react"
+// import { IoPrint } from "react-icons/io5";
+import test from "../../assets/a7535bed2bdafa25bf2a255d2a9b9389.jpeg"
 import { useLocation } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
-import getBooking from "./Bookings/bookings.handler";
-import RentalDetailsTable from "./Bookings/RentalDetailsTable";
-import { tokenContext } from "../contexts/AuthProvidor";
-import { useLang } from "../hooks/uselang";
+import getBooking from "../Bookings/bookings.handler";
+import RentalDetailsTable from "../Bookings/RentalDetailsTable";
+import { tokenContext } from "../../contexts/AuthProvidor";
+import { useLang } from "../../hooks/uselang";
+import { confirmBooking, deleteBooking } from "../Dashboard/handlers";
+import { CancelBooking } from "./CancelBooking";
+import { ConfirmBooking } from "./ConfirmBooking";
+import { AddProduct } from "./AddProduct";
 
 
 const Booking = () => {
@@ -24,26 +28,37 @@ const Booking = () => {
         getBooking(setBooking, id, token, lang)
     }, [id, token, lang])
 
+    const handldeUpdate = () => {
+        getBooking(setBooking, id, token, lang)
+    }
+
 
     return (
         <div className='p-5' >
             <div className="bg-white flex justify-between p-2 items-center rounded-2xl" >
                 <div className="flex gap-2" >
-                    <Button variant="solid" color="primary" className="rounded-full" >
-                        Confirm
-                    </Button>
-                    <Button variant="ghost" color="danger" className="rounded-full">
-                        Cancel
-                    </Button>
+
+                    {booking?.status === "draft" &&
+                        <ConfirmBooking onDelete={() => {
+                            confirmBooking(id, handldeUpdate, token)
+                        }} />
+                    }
+                    {booking?.status !== "cancel" &&
+                        <CancelBooking onDelete={() => {
+                            deleteBooking(id, handldeUpdate, token)
+                        }} />
+                    }
+
                 </div>
                 <div className="flex gap-4" >
                     {/* <Chip color="warning" variant="flat">Draft</Chip> */}
-                    <div className="flex items-center gap-1 hover:text-primary transition-colors duration-300 cursor-pointer" >
+                    {/* <div className="flex items-center gap-1 hover:text-primary transition-colors duration-300 cursor-pointer" >
                         <IoPrint />
                         <p>Print</p>
-                    </div>
-                    <Chip color="success" variant="flat">Completed</Chip>
-
+                    </div> */}
+                    {booking?.status === "cancel" && <Chip color="danger" variant="flat">Cancelled</Chip>}
+                    {booking?.status === "draft" && <Chip color="warning" variant="flat">Draft</Chip>}
+                    {booking?.status === "sale" && <Chip color="success" variant="flat">Confirmed</Chip>}
                 </div>
             </div>
             <div className="bg-white rounded-2xl py-3 px-5 mt-4" >
@@ -64,10 +79,15 @@ const Booking = () => {
                         <p className="text-gray-500" >Full Name: <span className="text-gray-400" >{booking?.building}</span> </p>
                     </div>
                 </div>
-                <div className="pe-5 py-4" >
+                <div className="pe-5 py-4 " >
                     <h1 className="font-semibold text-2xl text-primary pb-3" >Booking Details</h1>
+                    <div className="flex justify-end my-3" >
+                        <AddProduct />
+
+                    </div>
                     <RentalDetailsTable rooms={booking?.room_info} foods={booking?.food_info} />
                 </div>
+
                 <hr />
                 <div className="grid grid-cols-2 gap-16 pt-3 mt-5" >
                     <div>
