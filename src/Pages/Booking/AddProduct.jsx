@@ -1,53 +1,61 @@
 /* eslint-disable react/prop-types */
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure } from "@nextui-org/react";
 import { useContext, useEffect, useState } from "react";
-import { getProducts } from "../Dashboard/handlers";
+import { createOrder, getProducts } from "../Dashboard/handlers";
 import { tokenContext } from "../../contexts/AuthProvidor";
 import { useLang } from "../../hooks/uselang";
 import { useFormik } from "formik";
 import * as Yup from 'yup';
+import Counter from "./Counter";
 
-export function AddProduct() {
+export function AddProduct({ id, room_id }) {
 
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const [products, setProducts] = useState([]);
     const [, setIsLoading] = useState(true);
     const token = useContext(tokenContext);
     const lang = useLang();
+    const [order, setOrder] = useState(
+        {
+            booking_id: id,
+            foods: [],
+        }
+    );
 
 
-    const [food, setFood] = useState([]);
-    const [deserts, setDeserts] = useState([]);
-    const [coffe, setCoffe] = useState([]);
-    const [snacks, setSnacks] = useState([]);
+
+    const formHandler = useFormik({
+        initialValues: order,
+        enableReinitialize: true, // Ensures formik reinitializes values on state change
+        validationSchema: Yup.object({
+            foods: Yup.array().min(1, "Please select at least one food item").required("Please select at least one food item"),
+        }),
+        onSubmit: (values) => {
+            console.log("hhhh", values);
+            createOrder(values, token)
+        }
+    });
 
     useEffect(() => {
         getProducts(setProducts, setIsLoading, token, lang)
     }, [token, lang])
 
-    const formHandler = useFormik({
+    useEffect(() => {
+        setOrder(prevOrder => ({
+            ...prevOrder,
+            booking_id: id
+        }));
+    }, [id]);
 
-        initialValues: {
-            food: food,
-            deserts: deserts,
-            coffe: coffe,
-            snacks: snacks,
-        },
-        validationSchema: Yup.object({
-            food: Yup.string()
-                .required('food is required'),
-            deserts: Yup.string()
-                .required('deserts is required'),
-            coffe: Yup.string()
-                .required('coffe is required'),
-            snacks: Yup.string()
-                .required('snacks is required'),
-        }),
-        onSubmit: (values, { resetForm }) => {
-            // AddQuestion(values, setIsLoading, handleDelete, token, lang);
-            // resetForm();
-        }
-    });
+
+    useEffect(() => {
+        console.log("Order updated:", order);
+    }, [order]);
+
+    useEffect(() => {
+        console.log("Formik values:", formHandler.values);
+    }, [formHandler.values]);
+
 
     return (
         <>
@@ -55,144 +63,88 @@ export function AddProduct() {
             <Button onClick={onOpen} variant="ghost" color="success" className="rounded-full">
                 Add product +
             </Button>
-            <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+            <Modal isOpen={isOpen} onOpenChange={onOpenChange} >
                 <ModalContent>
-                    {(onClose) => (
-                        <>
-                            <ModalHeader className="flex flex-col gap-1">Cancel Floor Map</ModalHeader>
-                            <ModalBody>
-                                <h1 className="text-xl" >Food</h1>
-                                <div>
-                                    {products?.food?.map(({ name, price, image }, index) => (
-                                        <div key={index} className="flex gap-2 items-center justify-between" >
-                                            <div className="flex justify-center gap-2 items-center">
-                                                <img src={"https://highnox.site/" + image[0]} alt="img" className="rounded-xl" width={60} height={60} />
-                                                <div className="flex flex-col" >
-                                                    <p>{name}</p>
-                                                    <p>{price}$</p>
-                                                </div>
-                                            </div>
-                                            <div >
-                                                <div className="relative flex items-center">
-                                                    <button type="button" id="decrement-button" data-input-counter-decrement="counter-input" className="flex-shrink-0 bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-gray-200 inline-flex items-center justify-center border border-gray-300 rounded-md h-5 w-5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none">
-                                                        <svg className="w-2.5 h-2.5 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 2">
-                                                            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 1h16" />
-                                                        </svg>
-                                                    </button>
-                                                    <input type="text" id="counter-input" data-input-counter className="flex-shrink-0 text-gray-900 dark:text-white border-0 bg-transparent text-sm font-normal focus:outline-none focus:ring-0 max-w-[2.5rem] text-center" placeholder="" value="12" required />
-                                                    <button type="button" id="increment-button" data-input-counter-increment="counter-input" className="flex-shrink-0 bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-gray-200 inline-flex items-center justify-center border border-gray-300 rounded-md h-5 w-5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none">
-                                                        <svg className="w-2.5 h-2.5 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-                                                            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 1v16M1 9h16" />
-                                                        </svg>
-                                                    </button>
-                                                </div>
+                    <form onSubmit={formHandler.handleSubmit} className="flex flex-col gap-4" >
+                        <ModalHeader className="flex flex-col gap-1">Cancel Floor Map</ModalHeader>
+                        <ModalBody>
+                            <h1 className="text-xl" >Food</h1>
+                            <div>
+                                {products?.food?.map(({ id, name, price, image }, index) => (
+                                    <div key={index} className="flex gap-2 items-center justify-between" >
+                                        <div className="flex justify-center gap-2 items-center">
+                                            <img src={"https://highnox.site/" + image[0]} alt="img" className="rounded-xl" width={60} height={60} />
+                                            <div className="flex flex-col" >
+                                                <p>{name}</p>
+                                                <p>{price}$</p>
                                             </div>
                                         </div>
-                                    ))}
-                                </div>
-                                <h1 className="text-xl" >deserts</h1>
-                                <div>
-                                    {products?.deserts?.map(({ name, price, image }, index) => (
-                                        <div key={index} className="flex gap-2 items-center justify-between" >
-                                            <div className="flex justify-center gap-2 items-center">
-                                                <img src={"https://highnox.site/" + image[0]} alt="img" className="rounded-xl" width={60} height={60} />
-                                                <div className="flex flex-col" >
-                                                    <p>{name}</p>
-                                                    <p>{price}$</p>
-                                                </div>
-                                            </div>
-                                            <div >
-                                                <div className="relative flex items-center">
-                                                    <button type="button" id="decrement-button" data-input-counter-decrement="counter-input" className="flex-shrink-0 bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-gray-200 inline-flex items-center justify-center border border-gray-300 rounded-md h-5 w-5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none">
-                                                        <svg className="w-2.5 h-2.5 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 2">
-                                                            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 1h16" />
-                                                        </svg>
-                                                    </button>
-                                                    <input type="text" id="counter-input" data-input-counter className="flex-shrink-0 text-gray-900 dark:text-white border-0 bg-transparent text-sm font-normal focus:outline-none focus:ring-0 max-w-[2.5rem] text-center" placeholder="" value="12" required />
-                                                    <button type="button" id="increment-button" data-input-counter-increment="counter-input" className="flex-shrink-0 bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-gray-200 inline-flex items-center justify-center border border-gray-300 rounded-md h-5 w-5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none">
-                                                        <svg className="w-2.5 h-2.5 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-                                                            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 1v16M1 9h16" />
-                                                        </svg>
-                                                    </button>
-                                                </div>
+                                        <Counter order={order} setOrder={setOrder} productId={id} roomId={room_id} />
+                                    </div>
+                                ))}
+                            </div>
+                            <h1 className="text-xl" >deserts</h1>
+                            <div>
+                                {products?.deserts?.map(({ id, name, price, image }, index) => (
+                                    <div key={index} className="flex gap-2 items-center justify-between" >
+                                        <div className="flex justify-center gap-2 items-center">
+                                            <img src={"https://highnox.site/" + image[0]} alt="img" className="rounded-xl" width={60} height={60} />
+                                            <div className="flex flex-col" >
+                                                <p>{name}</p>
+                                                <p>{price}$</p>
                                             </div>
                                         </div>
-                                    ))}
-                                </div>
-                                <h1 className="text-xl" >coffe</h1>
-                                <div>
-                                    {products?.coffe?.map(({ name, price, image }, index) => (
-                                        <div key={index} className="flex gap-2 items-center justify-between" >
-                                            <div className="flex justify-center gap-2 items-center">
-                                                <img src={"https://highnox.site/" + image[0]} alt="img" className="rounded-xl" width={60} height={60} />
-                                                <div className="flex flex-col" >
-                                                    <p>{name}</p>
-                                                    <p>{price}$</p>
-                                                </div>
-                                            </div>
-                                            <div >
-                                                <div className="relative flex items-center">
-                                                    <button type="button" id="decrement-button" data-input-counter-decrement="counter-input" className="flex-shrink-0 bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-gray-200 inline-flex items-center justify-center border border-gray-300 rounded-md h-5 w-5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none">
-                                                        <svg className="w-2.5 h-2.5 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 2">
-                                                            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 1h16" />
-                                                        </svg>
-                                                    </button>
-                                                    <input type="text" id="counter-input" data-input-counter className="flex-shrink-0 text-gray-900 dark:text-white border-0 bg-transparent text-sm font-normal focus:outline-none focus:ring-0 max-w-[2.5rem] text-center" placeholder="" value="12" required />
-                                                    <button type="button" id="increment-button" data-input-counter-increment="counter-input" className="flex-shrink-0 bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-gray-200 inline-flex items-center justify-center border border-gray-300 rounded-md h-5 w-5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none">
-                                                        <svg className="w-2.5 h-2.5 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-                                                            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 1v16M1 9h16" />
-                                                        </svg>
-                                                    </button>
-                                                </div>
+                                        <Counter order={order} setOrder={setOrder} productId={id} roomId={room_id} />
+                                    </div>
+                                ))}
+                            </div>
+                            <h1 className="text-xl" >coffe</h1>
+                            <div>
+                                {products?.coffe?.map(({ id, name, price, image }, index) => (
+                                    <div key={index} className="flex gap-2 items-center justify-between" >
+                                        <div className="flex justify-center gap-2 items-center">
+                                            <img src={"https://highnox.site/" + image[0]} alt="img" className="rounded-xl" width={60} height={60} />
+                                            <div className="flex flex-col" >
+                                                <p>{name}</p>
+                                                <p>{price}$</p>
                                             </div>
                                         </div>
-                                    ))}
-                                </div>
-                                <h1 className="text-xl" >snacks</h1>
-                                <div>
-                                    {products?.snacks?.map(({ name, price, image }, index) => (
-                                        <div key={index} className="flex gap-2 items-center justify-between" >
-                                            <div className="flex justify-center gap-2 items-center">
-                                                <img src={"https://highnox.site/" + image[0]} alt="img" className="rounded-xl" width={60} height={60} />
-                                                <div className="flex flex-col" >
-                                                    <p>{name}</p>
-                                                    <p>{price}$</p>
-                                                </div>
-                                            </div>
-                                            <div >
-                                                <div className="relative flex items-center">
-                                                    <button type="button" id="decrement-button" data-input-counter-decrement="counter-input" className="flex-shrink-0 bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-gray-200 inline-flex items-center justify-center border border-gray-300 rounded-md h-5 w-5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none">
-                                                        <svg className="w-2.5 h-2.5 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 2">
-                                                            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 1h16" />
-                                                        </svg>
-                                                    </button>
-                                                    <input type="text" id="counter-input" data-input-counter className="flex-shrink-0 text-gray-900 dark:text-white border-0 bg-transparent text-sm font-normal focus:outline-none focus:ring-0 max-w-[2.5rem] text-center" placeholder="" value="12" required />
-                                                    <button type="button" id="increment-button" data-input-counter-increment="counter-input" className="flex-shrink-0 bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-gray-200 inline-flex items-center justify-center border border-gray-300 rounded-md h-5 w-5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none">
-                                                        <svg className="w-2.5 h-2.5 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-                                                            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 1v16M1 9h16" />
-                                                        </svg>
-                                                    </button>
-                                                </div>
+                                        <Counter order={order} setOrder={setOrder} productId={id} roomId={room_id} />
+                                    </div>
+                                ))}
+                            </div>
+                            <h1 className="text-xl" >snacks</h1>
+                            <div>
+                                {products?.snacks?.map(({ id, name, price, image }, index) => (
+                                    <div key={index} className="flex gap-2 items-center justify-between" >
+                                        <div className="flex justify-center gap-2 items-center">
+                                            <img src={"https://highnox.site/" + image[0]} alt="img" className="rounded-xl" width={60} height={60} />
+                                            <div className="flex flex-col" >
+                                                <p>{name}</p>
+                                                <p>{price}$</p>
                                             </div>
                                         </div>
-                                    ))}
-                                </div>
-                            </ModalBody>
-                            <ModalFooter>
-                                <Button color="danger" variant="light" onPress={onClose}>
-                                    Close
-                                </Button>
-                                <Button color="danger" onPress={() => {
-                                    //    Add your function here
-                                    onClose()
-                                }}
+                                        <Counter order={order} setOrder={setOrder} productId={id} roomId={room_id} />
+                                    </div>
+                                ))}
+                            </div>
 
-                                >
-                                    Confirm
-                                </Button>
-                            </ModalFooter>
-                        </>
-                    )}
+                            <div>
+                                {formHandler.errors.foods && formHandler.touched.foods && <p className="text-red-500" >{formHandler.errors.foods}</p>}
+                            </div>
+                        </ModalBody>
+                        <ModalFooter>
+                            <Button color="danger" variant="light" >
+                                Close
+                            </Button>
+                            <Button color="danger" type="submit">
+                                Confirm
+                            </Button>
+
+                        </ModalFooter>
+
+
+                    </form>
                 </ModalContent>
             </Modal >
         </>

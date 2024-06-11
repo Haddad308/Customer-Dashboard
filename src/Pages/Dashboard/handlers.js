@@ -160,6 +160,28 @@ async function confirmBooking(id, callback, token, lang) {
     }
 }
 
+
+
+// *Done
+async function createOrder(values, token) {
+    try {
+        await instance.post(`/create_food?token=${token}`, values, {
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+            },
+            withCredentials: false
+        });
+        // callback();
+        cancel();
+    } catch (error) {
+        cancelled();
+        console.error("This is our Error", error);
+    }
+}
+
+
+
 export {
     getBookings,
     deleteBooking,
@@ -168,5 +190,6 @@ export {
     getOfficeRooms,
     getNews,
     confirmBooking,
-    getProducts
+    getProducts,
+    createOrder
 }
