@@ -54,11 +54,10 @@ function App() {
   const SideBarStatus = useState(true);
   const eventLoader = useState(false);
 
-  useEffect(() => {
-    localStorage.setItem("customer_dash_token", "8e453dd249b10ede0828004d0ec22b8197873f3d")
-    localStorage.setItem("customer_dash_url", "https://highnox.site/highnox")
-
-  })
+  // useEffect(() => {
+  //   localStorage.setItem("customer_dash_token", "8e453dd249b10ede0828004d0ec22b8197873f3d")
+  //   localStorage.setItem("customer_dash_url", "https://highnox.site/highnox")
+  // })
 
   return (
     <>
