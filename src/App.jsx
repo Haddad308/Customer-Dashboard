@@ -55,7 +55,7 @@ function App() {
   const eventLoader = useState(false);
 
   useEffect(() => {
-    localStorage.setItem("customer_dash_token", "10a8e388b7de51b23cedc7f9d8ddad0c1b4ed009")
+    localStorage.setItem("customer_dash_token", "8e453dd249b10ede0828004d0ec22b8197873f3d")
   })
 
   return (

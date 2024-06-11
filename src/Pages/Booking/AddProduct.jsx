@@ -4,6 +4,8 @@ import { useContext, useEffect, useState } from "react";
 import { getProducts } from "../Dashboard/handlers";
 import { tokenContext } from "../../contexts/AuthProvidor";
 import { useLang } from "../../hooks/uselang";
+import { useFormik } from "formik";
+import * as Yup from 'yup';
 
 export function AddProduct() {
 
@@ -13,10 +15,39 @@ export function AddProduct() {
     const token = useContext(tokenContext);
     const lang = useLang();
 
+
+    const [food, setFood] = useState([]);
+    const [deserts, setDeserts] = useState([]);
+    const [coffe, setCoffe] = useState([]);
+    const [snacks, setSnacks] = useState([]);
+
     useEffect(() => {
         getProducts(setProducts, setIsLoading, token, lang)
     }, [token, lang])
 
+    const formHandler = useFormik({
+
+        initialValues: {
+            food: food,
+            deserts: deserts,
+            coffe: coffe,
+            snacks: snacks,
+        },
+        validationSchema: Yup.object({
+            food: Yup.string()
+                .required('food is required'),
+            deserts: Yup.string()
+                .required('deserts is required'),
+            coffe: Yup.string()
+                .required('coffe is required'),
+            snacks: Yup.string()
+                .required('snacks is required'),
+        }),
+        onSubmit: (values, { resetForm }) => {
+            // AddQuestion(values, setIsLoading, handleDelete, token, lang);
+            // resetForm();
+        }
+    });
 
     return (
         <>

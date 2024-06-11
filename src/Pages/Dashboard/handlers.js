@@ -7,7 +7,7 @@ const cancelled = () => toast.error('This booking is already cancelled.');
 async function getBookings(setBooking, setIsLoading, status = "", token, lang) {
     setIsLoading(true);
     try {
-        const response = await instance.get(`/booking/?token=${token}${status ? `&status=${status}&lang=${lang}` : ""}`, {
+        const response = await instance.get(`/booking?token=${token}${status ? `&status=${status}&lang=${lang}` : ""}`, {
             headers: {
                 "Content-Type": "application/json",
                 "Accept": "application/json",
