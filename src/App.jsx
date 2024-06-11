@@ -12,7 +12,7 @@ import Invoices from "./Pages/Invoices/Invoices"
 import News from "./Pages/News"
 import { sideBarOpen } from "./contexts/SideBarOpen"
 import { eventsloading } from "./contexts/isLoadingE"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import Events from "./Pages/Events"
 import AvailableRooms from "./Pages/AvailableRooms"
 import AvailableOffices from "./Pages/AvailableOffices"
@@ -24,6 +24,7 @@ import NewsPage from "./Pages/DetailsPages/NewsPage"
 
 
 import './i18n';
+import { Toaster } from "react-hot-toast"
 function App() {
 
   const routers = createBrowserRouter([
@@ -61,6 +62,7 @@ function App() {
 
   return (
     <>
+      <Toaster />
       <NextUIProvider>
         <sideBarOpen.Provider value={SideBarStatus}>
           <eventsloading.Provider value={eventLoader}>

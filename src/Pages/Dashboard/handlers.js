@@ -2,6 +2,7 @@ import toast from "react-hot-toast";
 import { instance } from "../../Network/axios";
 const cancel = () => toast.success('The booking cancelled successfully.');
 const cancelled = () => toast.error('This booking is already cancelled.');
+const added = () => toast.success('Product added to the order successfully.');
 
 
 async function getBookings(setBooking, setIsLoading, status = "", token, lang) {
@@ -163,7 +164,8 @@ async function confirmBooking(id, callback, token, lang) {
 
 
 // *Done
-async function createOrder(values, token) {
+async function createOrder(values, token, callback, setIsLoading) {
+    setIsLoading(true);
     try {
         await instance.post(`/create_food?token=${token}`, values, {
             headers: {
@@ -172,11 +174,14 @@ async function createOrder(values, token) {
             },
             withCredentials: false
         });
-        // callback();
-        cancel();
+        callback();
+        added()
     } catch (error) {
         cancelled();
         console.error("This is our Error", error);
+    }
+    finally {
+        setIsLoading(false);
     }
 }
 

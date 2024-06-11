@@ -82,7 +82,7 @@ const Booking = () => {
                 <div className="pe-5 py-4 " >
                     <h1 className="font-semibold text-2xl text-primary pb-3" >Booking Details</h1>
                     <div className="flex justify-end my-3" >
-                        <AddProduct id={booking?.id} room_id={booking?.room_info?.[0]?.room_id} />
+                        <AddProduct id={booking?.id} room_id={booking?.room_info?.[0]?.room_id} handldeUpdate={handldeUpdate} />
 
                     </div>
                     <RentalDetailsTable rooms={booking?.room_info} foods={booking?.food_info} />

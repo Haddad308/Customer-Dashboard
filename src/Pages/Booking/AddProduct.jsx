@@ -8,11 +8,11 @@ import { useFormik } from "formik";
 import * as Yup from 'yup';
 import Counter from "./Counter";
 
-export function AddProduct({ id, room_id }) {
+export function AddProduct({ id, room_id, handldeUpdate }) {
 
-    const { isOpen, onOpen, onOpenChange } = useDisclosure();
+    const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
+    const [isLoading, setIsLoading] = useState(true);
     const [products, setProducts] = useState([]);
-    const [, setIsLoading] = useState(true);
     const token = useContext(tokenContext);
     const lang = useLang();
     const [order, setOrder] = useState(
@@ -22,6 +22,10 @@ export function AddProduct({ id, room_id }) {
         }
     );
 
+    const callback = () => {
+        onClose();
+        handldeUpdate()
+    }
 
 
     const formHandler = useFormik({
@@ -32,7 +36,7 @@ export function AddProduct({ id, room_id }) {
         }),
         onSubmit: (values) => {
             console.log("hhhh", values);
-            createOrder(values, token)
+            createOrder(values, token, callback, setIsLoading)
         }
     });
 
@@ -59,7 +63,6 @@ export function AddProduct({ id, room_id }) {
 
     return (
         <>
-
             <Button onClick={onOpen} variant="ghost" color="success" className="rounded-full">
                 Add product +
             </Button>
@@ -134,16 +137,13 @@ export function AddProduct({ id, room_id }) {
                             </div>
                         </ModalBody>
                         <ModalFooter>
-                            <Button color="danger" variant="light" >
+                            <Button color="danger" variant="light" onPress={onClose} >
                                 Close
                             </Button>
-                            <Button color="danger" type="submit">
+                            <Button color="danger" type="submit" isLoading={isLoading}>
                                 Confirm
                             </Button>
-
                         </ModalFooter>
-
-
                     </form>
                 </ModalContent>
             </Modal >
